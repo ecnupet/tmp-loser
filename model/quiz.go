@@ -11,7 +11,3 @@ type Quiz struct {
 	UpdatedAt   time.Time `xorm:"update_at"`
 	CreatedAt   time.Time    `xorm:"created_at"`
 }
-
-func QuizTableName() string {
-	return "quiz"
-}

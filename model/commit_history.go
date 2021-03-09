@@ -11,7 +11,3 @@ type CommitHistory struct {
 	Correct   string    `xorm:"correct"`
 	CreatedAt time.Time `xorm:"created_at"`
 }
-
-func CommitHistoryTableName() string {
-	return "commit_history"
-}

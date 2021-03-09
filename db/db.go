@@ -1,7 +1,6 @@
 package db
 
 import (
-	"context"
 	"sync"
 
 	"github.com/go-xorm/xorm"
@@ -13,7 +12,7 @@ var (
 	RedisClient *Redis
 )
 
-func MustInitialize(ctx context.Context, debug bool) {
+func init() {
 	once.Do(func() {
 		initMySQL()
 		initRedis()
