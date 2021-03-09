@@ -1,5 +1,5 @@
 package readwriter
 
 type AnswerHistoryReadWriter interface {
-	CorrectAndInsert()
+	CorrectAndInsert(quizID uint64, userID uint64, )
 }

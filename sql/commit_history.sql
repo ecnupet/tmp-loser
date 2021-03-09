@@ -1,4 +1,4 @@
-CREATE TABLE `history` (
+CREATE TABLE `commit_history` (
     `history_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '回答历史记录id',
     `user_id` bigint(20) unsigned NOT NULL COMMENT 'user id',
     `quiz_id` bigint(20) unsigned NOT NULL COMMENT '测试题目id',

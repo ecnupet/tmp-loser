@@ -2,7 +2,7 @@ package model
 
 import "time"
 
-type AnswerHistory struct {
+type CommitHistory struct {
 	HistoryID uint64    `xorm:"history_id"`
 	UserID    uint64    `xorm:"user_id"`
 	QuizID    uint64    `xorm:"quiz_id"`
@@ -12,6 +12,6 @@ type AnswerHistory struct {
 	CreatedAt time.Time `xorm:"created_at"`
 }
 
-func AnswerHistoryTableName() string {
-	return "answer_history"
+func CommitHistoryTableName() string {
+	return "commit_history"
 }
