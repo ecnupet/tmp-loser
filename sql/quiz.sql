@@ -7,6 +7,6 @@ CREATE TABLE `quiz` (
     `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间(自动更新)',
     `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间（自动创建）', 
     PRIMARY KEY (`quiz_id`),
-    KEY `idx_tag` (`tag`)
+    KEY `idx_tag` (`type`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='测试题目表'
 ;
