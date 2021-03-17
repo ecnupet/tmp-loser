@@ -2,8 +2,8 @@ package model
 
 import "time"
 
-type Quiz struct {
-	QuizID      uint64    `xorm:"quiz_id pk autoincr"`
+type Question struct {
+	QuestionID      uint64    `xorm:"quesion_id pk autoincr"`
 	Description string    `xorm:"description"`
 	Type        int       `xorm:"type"`
 	Options     string    `xorm:"options"`

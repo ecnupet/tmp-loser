@@ -1,9 +1,9 @@
 package store
 
 import (
+	"ecnu.space/tmp-loser/db"
 	"ecnu.space/tmp-loser/store/readwriter"
 	"ecnu.space/tmp-loser/store/readwriter/origin"
-	"ecnu.space/tmp-loser/db"
 )
 
 type Store struct {
@@ -14,6 +14,6 @@ type Store struct {
 func NewStore() *Store {
 	return &Store {
 		CommitHistoryRW:  origin.NewCommitHistoryRW(db.Engine),
-		QuizRW: origin.NewQuizRW(db.Engine),
+		QuizRW: origin.NewQuestionRW(db.Engine),
 	}
 }

@@ -31,4 +31,4 @@ func (rw *CommitHistoryRW) CorrectAndInsert(ctx context.Context, commit *model.C
 func (rw *CommitHistoryRW) GetCommitsByUserIDAndTestID(ctx context.Context) model.CommitHistory
 
 // TODO(shanchao)
-func (rw *CommitHistoryRW) GetCommitsByQuizID(ctx context.Context, quizID uint64) []model.Quiz
+func (rw *CommitHistoryRW) GetCommitsByQuestionID(ctx context.Context, questionID uint64) []model.Question

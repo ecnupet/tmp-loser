@@ -13,5 +13,5 @@ type CommitHistoryReadWriter interface {
 	// GetCommitsByUserIDAndTestID 根据用户ID个测验ID提供所有历史提交记录
 	GetCommitsByUserIDAndTestID(ctx context.Context) model.CommitHistory
 	// GetCommitsByQuizID 获取指定题目ID的所有提交记录
-	GetCommitsByQuizID(ctx context.Context, quizID uint64) []model.Quiz
+	GetCommitsByQuestionID(ctx context.Context, quizID uint64) []model.Question
 }
