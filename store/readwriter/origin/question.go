@@ -34,8 +34,16 @@ func (rw *QuestionRW) Insert(ctx context.Context, question *model.Question) erro
 	return err
 }
 
-// TODO(shanchao)
-func (rw *QuestionRW) GetQuestionByType(ctx context.Context, t string) ([]model.Question, error)
+func (rw *QuestionRW) GetQuestionByType(ctx context.Context, t string) ([]*model.Question, error){
+	questions := make([]*model.Question, 0)
+	err := rw.engine.Table(rw.TableName()).Where("type = ?", t).Find(&questions)
+	if err != nil {
+		return nil, err
+	}
+	return questions, nil
+}
 
-// TODO(shanchao)
-func (rw *QuestionRW) UpdateQuestion(ctx context.Context, question model.Question) error
+func (rw *QuestionRW) UpdateQuestion(ctx context.Context, questionID uint64, question *model.Question) error {
+	_, err := rw.engine.Table(rw.TableName()).ID(questionID).AllCols().Update(question)
+	return err
+}

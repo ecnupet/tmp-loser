@@ -15,8 +15,8 @@ type QuestionReadWriter interface {
 	Insert(ctx context.Context, question *model.Question) error
 
 	// GetQuestionByType根据类型获取所有的题目
-	GetQuestionByType(ctx context.Context, t string) ([]model.Question, error)
+	GetQuestionByType(ctx context.Context, t string) ([]*model.Question, error)
 
 	// UpdateQuestion 更新题目
-	UpdateQuestion(ctx context.Context, question model.Question) error
+	UpdateQuestion(ctx context.Context, questionID uint64, question *model.Question) error
 }
