@@ -24,11 +24,15 @@ func (rw *QuestionRW) TableName() string {
 	return QuestionTableName
 }
 
-// TODO(shanchao)
-func (rw *QuestionRW) BatchInsert(ctx context.Context, questions []*model.Question) error
+func (rw *QuestionRW) BatchInsert(ctx context.Context, questions []*model.Question) error {
+	_, err := rw.engine.Table(rw.TableName()).InsertMulti(questions)
+	return err
+}
 
-// TODO(shanchao)
-func (rw *QuestionRW) Insert(ctx context.Context, questions *model.Question) error
+func (rw *QuestionRW) Insert(ctx context.Context, question *model.Question) error {
+	_, err := rw.engine.Table(rw.TableName()).InsertOne(question)
+	return err
+}
 
 // TODO(shanchao)
 func (rw *QuestionRW) GetQuestionByType(ctx context.Context, t string) ([]model.Question, error)
