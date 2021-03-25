@@ -4,6 +4,7 @@ import (
 	"sync"
 
 	"github.com/go-xorm/xorm"
+	_ "github.com/jinzhu/gorm/dialects/mysql" 
 )
 
 var (
