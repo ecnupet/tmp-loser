@@ -8,12 +8,12 @@ import (
 
 type Store struct {
 	CommitHistoryRW readwriter.CommitHistoryReadWriter
-	QuizRW          readwriter.QuestionReadWriter
+	QuestionRW          readwriter.QuestionReadWriter
 }
 
 func NewStore() *Store {
 	return &Store {
 		CommitHistoryRW:  origin.NewCommitHistoryRW(db.Engine),
-		QuizRW: origin.NewQuestionRW(db.Engine),
+		QuestionRW: origin.NewQuestionRW(db.Engine),
 	}
 }

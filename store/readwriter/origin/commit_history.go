@@ -25,10 +25,16 @@ func (rw *CommitHistoryRW) TableName() string {
 }
 
 // TODO(shanchao)
-func (rw *CommitHistoryRW) CorrectAndInsert(ctx context.Context, commit *model.CommitHistory) error
+func (rw *CommitHistoryRW) CorrectAndInsert(ctx context.Context, commit *model.QuizQuestion) error
 
 // TODO(shanchao)
-func (rw *CommitHistoryRW) GetCommitsByUserIDAndTestID(ctx context.Context) model.CommitHistory
+func (rw *CommitHistoryRW) GetCommitsByUserNameAndQuizID(ctx context.Context, userName string, quizID uint64) []model.CommitHistory
 
 // TODO(shanchao)
-func (rw *CommitHistoryRW) GetCommitsByQuestionID(ctx context.Context, questionID uint64) []model.Question
+func (rw *CommitHistoryRW) GetQuizIDByUserNameAndPageNoAndNum(ctx context.Context, userID string, pageNo uint64, num uint64) []uint64
+
+// TODO(shanchao)
+func (rw *CommitHistoryRW) GetCommitsByQuestionID(ctx context.Context, quizID uint64) []model.CommitHistory
+
+// TODO(shanchao)
+func (rw *CommitHistoryRW) GenQuiz(userName string) []model.QuizQuestion
