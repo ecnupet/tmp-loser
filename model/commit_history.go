@@ -9,5 +9,6 @@ type CommitHistory struct {
 	Choose    string    `xorm:"choose"`
 	QuizID    uint64    `xorm:"quiz_id"`
 	Correct   string    `xorm:"correct"`
+	Spend		int64	`xorm:"spend"`
 	CreatedAt time.Time `xorm:"created_at"`
 }

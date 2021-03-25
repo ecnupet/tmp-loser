@@ -8,7 +8,7 @@ import (
 
 type Store struct {
 	CommitHistoryRW readwriter.CommitHistoryReadWriter
-	QuizRW          readwriter.QuizReadWriter
+	QuizRW          readwriter.QuestionReadWriter
 }
 
 func NewStore() *Store {

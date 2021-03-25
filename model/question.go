@@ -8,6 +8,7 @@ type Question struct {
 	Type        int       `xorm:"type"`
 	Options     string    `xorm:"options"`
 	Answer      string    `xorm:"answer"`
+	Duration	time.Time	`xorm:"duration"`
 	UpdatedAt   time.Time `xorm:"update_at"`
 	CreatedAt   time.Time    `xorm:"created_at"`
 }
