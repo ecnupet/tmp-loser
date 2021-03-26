@@ -14,6 +14,7 @@ var (
 )
 
 func init() {
+	// 单例初始化
 	once.Do(func() {
 		initMySQL()
 		initRedis()
