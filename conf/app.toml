@@ -1,5 +1,5 @@
 app_name = "tmp-loser"
-server_host = ":8080"
+server_host = ":8082"
 gin_mode = "test"
 [mysql]
 dsn = "root:Hecishuo?32@tcp(47.117.142.201:3306)/ecnupet"

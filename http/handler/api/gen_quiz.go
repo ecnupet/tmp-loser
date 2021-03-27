@@ -2,7 +2,6 @@ package api
 
 import (
 	"log"
-	"sort"
 
 	"ecnu.space/tmp-loser/db"
 	"ecnu.space/tmp-loser/store"
@@ -11,7 +10,7 @@ import (
 )
 
 const (
-	questionNum = 10
+	questionNum = 1
 )
 
 // 鉴权配置前，先假设提供user_name参数
@@ -24,20 +23,18 @@ func GenQuiz(c *gin.Context) {
 		utils.HandleGetDBErr(c)
 		return
 	}
-	rates := []float64{}
+	ratesMap := make(map[uint64]float64)
 	for _, question := range questions {
-		rates = append(rates, GetQuestionCorrectRateByUser(userName, question.QuestionID))
+		ratesMap[question.QuestionID] = GetQuestionCorrectRateByUser(userName, question.QuestionID)
 	}
-	// 从小到大
-	sort.Float64Slice(rates).Sort()
-	if len(rates) < questionNum {
-		log.Println("shortage in question num")
+	// // 从小到大
+	// sort.Float64Slice(rates).Sort()
+	if len(ratesMap) < questionNum {
+		log.Println("GenQuiz shortage in question num")
 		utils.HandleGetNumErr(c)
 		return
 	}
-	utils.HandleGetSuccess(c, rates)
-	return
-
+	utils.HandleGetSuccess(c, ratesMap)
 }
 
 // GetQuestionCorrectRateByUser get correct rate in redis

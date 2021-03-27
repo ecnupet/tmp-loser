@@ -1,10 +1,10 @@
 app_name = "tmp-loser"
-server_host = ":8080"
+server_host = ":8082"
 gin_mode = "test"
 [mysql]
 dsn = "root:Hecishuo?32@tcp(47.117.142.201:3306)/ecnupet"
 max_idle_conns = 5
 max_open_conns = 5
 [redis]
-addr = "redis://127.0.0.1:6379"
+addr = "127.0.0.1:6379"
 pool_size = 10

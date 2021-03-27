@@ -25,31 +25,31 @@ const (
 )
 
 type Response struct {
-	state  State       `json:state`
-	detail Detail      `json:detail`
-	data   interface{} `json:data`
+	State  State       `json:"state"`
+	Detail Detail      `json:"detail"`
+	Data   interface{} `json:"data"`
 }
 
 func HandleGetDBErr(c *gin.Context) {
 	c.JSON(int(InternalError), Response{
-		state:  InternalError,
-		detail: GetFailForDB,
-		data:   []string{},
+		State:  InternalError,
+		Detail: GetFailForDB,
+		Data:   []string{},
 	})
 }
 
 func HandleGetNumErr(c *gin.Context) {
 	c.JSON(int(InternalError), Response{
-		state: InternalError,
-		detail: GetFailForNum,
-		data: []string{},
+		State: InternalError,
+		Detail: GetFailForNum,
+		Data: []string{},
 	})
 }
 
 func HandleGetSuccess(c *gin.Context, data interface{}) {
 	c.JSON(int(OK), Response{
-		state: OK,
-		detail: GetSuccess,
-		data: data,
+		State: OK,
+		Detail: GetSuccess,
+		Data: data,
 	})
 }
