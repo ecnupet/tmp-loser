@@ -1,8 +1,6 @@
 package origin
 
 import (
-	"context"
-
 	"ecnu.space/tmp-loser/model"
 	"github.com/go-xorm/xorm"
 )
@@ -24,17 +22,17 @@ func (rw *QuestionRW) TableName() string {
 	return QuestionTableName
 }
 
-func (rw *QuestionRW) BatchInsert(ctx context.Context, questions []*model.Question) error {
+func (rw *QuestionRW) BatchInsert(questions []*model.Question) error {
 	_, err := rw.engine.Table(rw.TableName()).InsertMulti(questions)
 	return err
 }
 
-func (rw *QuestionRW) Insert(ctx context.Context, question *model.Question) error {
+func (rw *QuestionRW) Insert(question *model.Question) error {
 	_, err := rw.engine.Table(rw.TableName()).InsertOne(question)
 	return err
 }
 
-func (rw *QuestionRW) GetQuestionByType(ctx context.Context, t string) ([]*model.Question, error){
+func (rw *QuestionRW) GetQuestionByType(t string) ([]*model.Question, error) {
 	questions := make([]*model.Question, 0)
 	err := rw.engine.Table(rw.TableName()).Where("type = ?", t).Find(&questions)
 	if err != nil {
@@ -43,7 +41,7 @@ func (rw *QuestionRW) GetQuestionByType(ctx context.Context, t string) ([]*model
 	return questions, nil
 }
 
-func (rw *QuestionRW) UpdateQuestion(ctx context.Context, questionID uint64, question *model.Question) error {
+func (rw *QuestionRW) UpdateQuestion(questionID uint64, question *model.Question) error {
 	_, err := rw.engine.Table(rw.TableName()).ID(questionID).AllCols().Update(question)
 	return err
 }
