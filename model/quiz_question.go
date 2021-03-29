@@ -1,6 +1,6 @@
 package model
 
-// 测试试卷的题目，生成的返回题目，接收web端提交的解答json均用这个结构体
+// 测试试卷的题目，需要返回的题目，接收web端提交的解答json均用这个结构体
 type QuizQuestion struct {
 	UserName    string            `json:"user_name"`
 	QuestionID  uint64            `json:"question_id"`
