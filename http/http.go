@@ -29,5 +29,6 @@ func route(e *gin.Engine) {
 	// group
 	unauthed := e.Group("/api/quiz")
 	unauthed.GET("new", api.GenQuiz)
+	unauthed.POST("correct", api.CommitQuizQuestion)
 	// route
 }

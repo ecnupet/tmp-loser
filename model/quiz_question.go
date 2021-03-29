@@ -7,7 +7,8 @@ type QuizQuestion struct {
 	Description string            `json:"description"`
 	Options     map[string]string `json:"options"`
 	Type        uint64            `json:"type"`
-	quizID      uint64            `json:"quiz_id"`
+	QuizID      uint64            `json:"quiz_id"`
+	Order       uint64            `json:"order"`
 	// 用户选择 为空
 	Choose string `json:"choose"`
 	// 花费的时间 为空

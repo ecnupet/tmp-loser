@@ -20,7 +20,7 @@ func GenQuiz(c *gin.Context) {
 	questions, err := store.GetDB().QuestionRW.GetQuestionByType(t)
 	if err != nil {
 		log.Println("GenQuiz GetQuestionByType error: ", err)
-		utils.HandleGetDBErr(c)
+		utils.HandleGetDBErr(c, err.Error())
 		return
 	}
 	ratesMap := make(map[uint64]float64)
@@ -31,7 +31,7 @@ func GenQuiz(c *gin.Context) {
 	// sort.Float64Slice(rates).Sort()
 	if len(ratesMap) < requiredQuestionNum {
 		log.Println("GenQuiz shortage in question num")
-		utils.HandleGetNumErr(c)
+		utils.HandleGetNumErr(c, "GenQuiz shortage in question num")
 		return
 	}
 	utils.HandleGetSuccess(c, ratesMap)

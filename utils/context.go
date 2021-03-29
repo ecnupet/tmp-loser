@@ -9,7 +9,7 @@ type Detail string
 
 const (
 	// http state
-	OK            HttpState = 200
+	OK HttpState = 200
 	// 临时重定向
 	Redirect      HttpState = 302
 	Unknown       HttpState = 404
@@ -22,44 +22,61 @@ const (
 	GetFailForNum Detail = "获取失败，题目不足"
 	PostSuccess   Detail = "上传成功"
 	PostFail      Detail = "上传失败, 参数错误"
+	PostFailForDB Detail = "上传失败，数据库错误"
 	DeleteSuccess Detail = "删除成功"
 	DeleteFail    Detail = "删除失败"
 )
 
 type Response struct {
-	State  HttpState       `json:"state"`
+	State  HttpState   `json:"state"`
 	Detail Detail      `json:"detail"`
 	Data   interface{} `json:"data"`
 }
 
-func HandleGetDBErr(c *gin.Context) {
+func HandleGetDBErr(c *gin.Context, errString string) {
 	c.JSON(int(InternalError), Response{
 		State:  InternalError,
 		Detail: GetFailForDB,
-		Data:   []string{},
+		Data:   errString,
 	})
 }
 
-func HandleGetNumErr(c *gin.Context) {
+func HandleGetNumErr(c *gin.Context, errString string) {
 	c.JSON(int(InternalError), Response{
-		State: InternalError,
+		State:  InternalError,
 		Detail: GetFailForNum,
-		Data: []string{},
+		Data:   errString,
 	})
 }
 
 func HandleGetSuccess(c *gin.Context, data interface{}) {
 	c.JSON(int(OK), Response{
-		State: OK,
+		State:  OK,
 		Detail: GetSuccess,
-		Data: data,
+		Data:   data,
 	})
 }
 
-func HandlePostQuizQuestion(c *gin.Context){
+func HandlePostSuccess(c *gin.Context, data interface{}) {
+	c.JSON(int(OK), Response{
+		State:  OK,
+		Detail: PostSuccess,
+		Data:   data,
+	})
+}
+
+func HandlePostQuizQuestionErr(c *gin.Context, errString string) {
 	c.JSON(int(BadRequest), Response{
-		State: BadRequest,
+		State:  BadRequest,
 		Detail: PostFail,
-		Data: "",
+		Data:   errString,
+	})
+}
+
+func HandlePostDBErr(c *gin.Context, errString string) {
+	c.JSON(int(InternalError), Response{
+		State:  InternalError,
+		Detail: PostFailForDB,
+		Data:   errString,
 	})
 }
