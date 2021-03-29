@@ -10,7 +10,7 @@ import (
 )
 
 const (
-	questionNum = 1
+	requiredQuestionNum = 1
 )
 
 // 鉴权配置前，先假设提供user_name参数
@@ -29,7 +29,7 @@ func GenQuiz(c *gin.Context) {
 	}
 	// // 从小到大
 	// sort.Float64Slice(rates).Sort()
-	if len(ratesMap) < questionNum {
+	if len(ratesMap) < requiredQuestionNum {
 		log.Println("GenQuiz shortage in question num")
 		utils.HandleGetNumErr(c)
 		return
