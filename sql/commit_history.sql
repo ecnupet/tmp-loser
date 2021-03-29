@@ -9,6 +9,7 @@ CREATE TABLE `commit_history` (
     `spend` int NOT NULL DEFAULT 0 COMMENT '默认0',
     `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '完成时间，为最后一次更新时间',
     PRIMARY KEY (`history_id`),
+    UNIQUE KEY `unique_quiz_order` (`quiz_id`, `order`),
     KEY `idx_user_name` (`user_name`),
     KEY `idx_quiz_id` (`quiz_id`),
     KEY `idx_question_id` (`question_id`),

@@ -22,13 +22,27 @@ func (rw *CommitHistoryRW) TableName() string {
 	return CommitHistoryTableName
 }
 
+// Insert 插入并返回主键，支持事务，可高并发
 func (rw *CommitHistoryRW) Insert(commit *model.CommitHistory) (int64, error) {
-	// 返回主键
-	p, err := rw.engine.Table(rw.TableName()).InsertOne(commit)
-	if err != nil {
-		return p, err
+	session := rw.engine.Table(rw.TableName())
+	// 事务启动
+	if err := session.Begin(); err != nil {
+		return -1, err
 	}
-	return p, nil
+	_, err := session.InsertOne(commit)
+	if err != nil {
+		return -1, err
+	}
+	maxHistoryID := -1
+	_, err = rw.engine.Table(rw.TableName()).Select("max(history_id)").Get(&maxHistoryID)
+	if err != nil {
+		return -1, err
+	}
+	// 事务提交
+	if err := session.Commit(); err != nil {
+		return -1, err
+	}
+	return int64(maxHistoryID), nil
 }
 
 func (rw *CommitHistoryRW) GetCommitsByUserNameAndQuizID(userName string, quizID uint64) ([]*model.CommitHistory, error) {
@@ -58,11 +72,11 @@ func (rw *CommitHistoryRW) GetCommitsByQuestionID(questionID uint64) ([]*model.C
 	return chs, err
 }
 
-func (rw * CommitHistoryRW) GetCommitByHistoryID(historyID uint64) (*model.CommitHistory, error) {
-	ch := new(model.CommitHistory)
-	err := rw.engine.Table(rw.TableName()).Where("history_id = ?", historyID).Find(&ch)
+func (rw *CommitHistoryRW) GetCommitByHistoryID(historyID uint64) ([]*model.CommitHistory, error) {
+	chs := make([]*model.CommitHistory, 0)
+	err := rw.engine.Table(rw.TableName()).Where("history_id = ?", historyID).Find(&chs)
 	if err != nil {
-		return nil ,err
+		return nil, err
 	}
-	return ch, nil
+	return chs, nil
 }

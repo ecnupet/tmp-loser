@@ -19,5 +19,5 @@ type CommitHistoryReadWriter interface {
 	GetCommitsByQuestionID(quizID uint64) ([]*model.CommitHistory, error)
 
 	// GetCommitByHistoryID
-	GetCommitByHistoryID(historyID uint64) (*model.CommitHistory, error)
+	GetCommitByHistoryID(historyID uint64) ([]*model.CommitHistory, error)
 }

@@ -46,11 +46,11 @@ func (rw *QuestionRW) UpdateQuestion(questionID uint64, question *model.Question
 	return err
 }
 
-func (rw *QuestionRW) GetQuestionById(questionID uint64) (*model.Question, error) {
-	q := new(model.Question)
-	err := rw.engine.Table(rw.TableName()).Where("question_id = ?", questionID).Find(q)
+func (rw *QuestionRW) GetQuestionById(questionID uint64) ([]*model.Question, error) {
+	qs := make([]*model.Question, 0)
+	err := rw.engine.Table(rw.TableName()).Where("question_id = ?", questionID).Find(&qs)
 	if err != nil {
 		return nil, err
 	}
-	return q, nil	
+	return qs, nil
 }
