@@ -30,6 +30,8 @@ func route(e *gin.Engine) {
 	unauthed := e.Group("/api/tl")
 	unauthed.Use(middleware.Cors())
 	// route
+	unauthed.POST("test", api.TestPost)
+	unauthed.POST("test2", api.TestPost2Seconds)
 	unauthed.POST("/quiz/new", api.GenQuiz)
 	unauthed.POST("/quiz/correct", api.CommitQuizQuestion)
 	unauthed.GET("/question/detail", api.GetQuestionDetail)
