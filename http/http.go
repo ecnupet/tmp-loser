@@ -27,8 +27,8 @@ func InitAndStart(c *conf.AppConfig) *http.Server {
 //route provide http routes to invoke handler
 func route(e *gin.Engine) {
 	// group
-	unauthed := e.Group("/api/quiz")
-	unauthed.GET("new", api.GenQuiz)
-	unauthed.POST("correct", api.CommitQuizQuestion)
+	unauthed := e.Group("/api/tl")
+	unauthed.GET("/quiz/new", api.GenQuiz)
+	unauthed.POST("/quiz/correct", api.CommitQuizQuestion)
 	// route
 }

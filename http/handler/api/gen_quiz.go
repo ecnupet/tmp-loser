@@ -23,7 +23,7 @@ func GenQuiz(c *gin.Context) {
 		utils.HandleGetDBErr(c, err.Error())
 		return
 	}
-	ratesMap := make(map[uint64]float64)
+	ratesMap := make(map[uint32]float32)
 	for _, question := range questions {
 		ratesMap[question.QuestionID] = GetQuestionCorrectRateByUser(userName, question.QuestionID)
 	}
@@ -38,15 +38,15 @@ func GenQuiz(c *gin.Context) {
 }
 
 // GetQuestionCorrectRateByUser get correct rate in redis
-func GetQuestionCorrectRateByUser(userName string, questionID uint64) float64 {
+func GetQuestionCorrectRateByUser(userName string, questionID uint32) float32 {
 	conn := db.RedisClient.GetConn()
 	res, err := conn.Do("HGET", userName, questionID)
 	if err != nil {
 		log.Println("etQuestionCorrectRateByUser Redis HGET err: ", err)
 	}
-	f, ok := res.(float64)
+	f, ok := res.(float32)
 	if ok {
 		return f
 	}
-	return float64(1)
+	return float32(1)
 }

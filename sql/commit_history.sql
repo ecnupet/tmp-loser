@@ -1,9 +1,9 @@
 CREATE TABLE `commit_history` (
-    `history_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '回答历史记录id',
+    `history_id` int unsigned NOT NULL AUTO_INCREMENT COMMENT '回答历史记录id',
     `user_name` varchar(100) NOT NULL COMMENT '用户名',
-    `question_id` bigint(20) unsigned NOT NULL COMMENT '测试题目id',
+    `question_id` int unsigned NOT NULL COMMENT '测试题目id',
     `choose` char NOT NULL COMMENT '用户的选择', 
-    `quiz_id` bigint(10) unsigned NOT NULL COMMENT '所属的测验id',
+    `quiz_id` int unsigned NOT NULL COMMENT '所属的测验id',
     `order` int unsigned NOT NULL COMMENT '在测验中的顺序',
     `correct` tinyint(1) NOT NULL NOt NULL DEFAULT '0' COMMENT '知识点正误, 0: 未设置, 1: 正确, 2: 错误',
     `spend` int NOT NULL DEFAULT 0 COMMENT '默认0',

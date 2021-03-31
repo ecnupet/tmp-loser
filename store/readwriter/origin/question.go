@@ -41,12 +41,12 @@ func (rw *QuestionRW) GetQuestionByType(t string) ([]*model.Question, error) {
 	return questions, nil
 }
 
-func (rw *QuestionRW) UpdateQuestion(questionID uint64, question *model.Question) error {
+func (rw *QuestionRW) UpdateQuestion(questionID uint32, question *model.Question) error {
 	_, err := rw.engine.Table(rw.TableName()).ID(questionID).AllCols().Update(question)
 	return err
 }
 
-func (rw *QuestionRW) GetQuestionById(questionID uint64) ([]*model.Question, error) {
+func (rw *QuestionRW) GetQuestionById(questionID uint32) ([]*model.Question, error) {
 	qs := make([]*model.Question, 0)
 	err := rw.engine.Table(rw.TableName()).Where("question_id = ?", questionID).Find(&qs)
 	if err != nil {

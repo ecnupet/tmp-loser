@@ -1,5 +1,5 @@
 CREATE TABLE `question` (
-    `question_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '练习题目id',
+    `question_id` int unsigned NOT NULL AUTO_INCREMENT COMMENT '练习题目id',
     `description` varchar(166) NOT NULL COMMENT '题目描述',
     `type` tinyint NOT NULL COMMENT '唯一题目类型, 和病例有关',
     `options` json NOT NULL COMMENT '所有选项，json格式{"A": "...", "B": "...", "C": "..."}',

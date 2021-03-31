@@ -37,18 +37,19 @@ func CommitQuizQuestion(c *gin.Context) {
 		Correct:  rst,
 	}
 	chID, err := store.GetDB().CommitHistoryRW.Insert(&ch)
+	log.Println("histry_id: ", chID)
 	if err != nil {
 		log.Println("CommitQuizQuestion 3 err:", err)
 		utils.HandlePostDBErr(c, err.Error())
 		return
 	}
-	chs2, err := store.GetDB().CommitHistoryRW.GetCommitByHistoryID(uint64(chID))
+	chs2, err := store.GetDB().CommitHistoryRW.GetCommitByHistoryID(uint32(chID))
 	if err != nil {
 		log.Println("CommitQuizQuestion 4 err:", err)
-		utils.HandleGetDBErr(c, err.Error())
+		utils.HandlePostDBErr(c, err.Error())
 	}
 	if len(chs2) < 1 {
-		log.Println("CommitQuizQuestion 4 err:", err)
+		log.Println("CommitQuizQuestion 5 err:", err)
 		utils.HandlePostQuizQuestionErr(c, "无commitHistory")
 		return
 	}
@@ -56,7 +57,7 @@ func CommitQuizQuestion(c *gin.Context) {
 }
 
 // correct 批改提交的回答
-func correct(qq model.QuizQuestion) (uint64, error) {
+func correct(qq model.QuizQuestion) (uint32, error) {
 	questionID := qq.QuestionID
 	questions, err := store.GetDB().QuestionRW.GetQuestionById(questionID)
 	if err != nil {

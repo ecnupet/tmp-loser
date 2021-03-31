@@ -22,30 +22,21 @@ func (rw *CommitHistoryRW) TableName() string {
 	return CommitHistoryTableName
 }
 
-// Insert 插入并返回主键，支持事务，可高并发
-func (rw *CommitHistoryRW) Insert(commit *model.CommitHistory) (int64, error) {
-	session := rw.engine.Table(rw.TableName())
-	// 事务启动
-	if err := session.Begin(); err != nil {
-		return -1, err
-	}
-	_, err := session.InsertOne(commit)
+// Insert insert 暂时不支持事务
+func (rw *CommitHistoryRW) Insert(commit *model.CommitHistory) (int32, error) {
+	_, err := rw.engine.Table(rw.TableName()).InsertOne(commit)
 	if err != nil {
-		return -1, err
+		return -2, err
 	}
 	maxHistoryID := -1
 	_, err = rw.engine.Table(rw.TableName()).Select("max(history_id)").Get(&maxHistoryID)
 	if err != nil {
-		return -1, err
+		return -3, err
 	}
-	// 事务提交
-	if err := session.Commit(); err != nil {
-		return -1, err
-	}
-	return int64(maxHistoryID), nil
+	return int32(maxHistoryID), nil
 }
 
-func (rw *CommitHistoryRW) GetCommitsByUserNameAndQuizID(userName string, quizID uint64) ([]*model.CommitHistory, error) {
+func (rw *CommitHistoryRW) GetCommitsByUserNameAndQuizID(userName string, quizID uint32) ([]*model.CommitHistory, error) {
 	chs := make([]*model.CommitHistory, 0)
 	err := rw.engine.Table(rw.TableName()).Where("user_name = ? and quiz_id = ?", userName, quizID).Find(&chs)
 	if err != nil {
@@ -54,8 +45,8 @@ func (rw *CommitHistoryRW) GetCommitsByUserNameAndQuizID(userName string, quizID
 	return chs, nil
 }
 
-func (rw *CommitHistoryRW) GetQuizIDByUserNameAndPageNoAndNum(userName string, page uint64, pageSize uint64) ([]uint64, error) {
-	quizIDs := make([]uint64, 0)
+func (rw *CommitHistoryRW) GetQuizIDByUserNameAndPageNoAndNum(userName string, page uint32, pageSize uint32) ([]uint32, error) {
+	quizIDs := make([]uint32, 0)
 	err := rw.engine.Table(rw.TableName()).Select("quiz_id").Where("user_name = ?", userName).Limit(int(pageSize), int((page-1)*pageSize)).Find(&quizIDs)
 	if err != nil {
 		return nil, err
@@ -63,7 +54,7 @@ func (rw *CommitHistoryRW) GetQuizIDByUserNameAndPageNoAndNum(userName string, p
 	return quizIDs, nil
 }
 
-func (rw *CommitHistoryRW) GetCommitsByQuestionID(questionID uint64) ([]*model.CommitHistory, error) {
+func (rw *CommitHistoryRW) GetCommitsByQuestionID(questionID uint32) ([]*model.CommitHistory, error) {
 	chs := make([]*model.CommitHistory, 0)
 	err := rw.engine.Table(rw.TableName()).Where("question_id = ?", questionID).Find(&chs)
 	if err != nil {
@@ -72,7 +63,7 @@ func (rw *CommitHistoryRW) GetCommitsByQuestionID(questionID uint64) ([]*model.C
 	return chs, err
 }
 
-func (rw *CommitHistoryRW) GetCommitByHistoryID(historyID uint64) ([]*model.CommitHistory, error) {
+func (rw *CommitHistoryRW) GetCommitByHistoryID(historyID uint32) ([]*model.CommitHistory, error) {
 	chs := make([]*model.CommitHistory, 0)
 	err := rw.engine.Table(rw.TableName()).Where("history_id = ?", historyID).Find(&chs)
 	if err != nil {

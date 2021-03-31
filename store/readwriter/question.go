@@ -16,8 +16,8 @@ type QuestionReadWriter interface {
 	GetQuestionByType(t string) ([]*model.Question, error)
 
 	// UpdateQuestion 更新题目
-	UpdateQuestion(questionID uint64, question *model.Question) error
+	UpdateQuestion(questionID uint32, question *model.Question) error
 
 	// GetQuestionById get question by id
-	GetQuestionById(questionID uint64) ([]*model.Question, error)
+	GetQuestionById(questionID uint32) ([]*model.Question, error)
 }
