@@ -6,6 +6,7 @@ import (
 
 	"ecnu.space/tmp-loser/conf"
 	"ecnu.space/tmp-loser/http/handler/api"
+	"ecnu.space/tmp-loser/http/handler/middleware"
 	"github.com/gin-gonic/gin"
 )
 
@@ -26,8 +27,8 @@ func InitAndStart(c *conf.AppConfig) *http.Server {
 
 //route provide http routes to invoke handler
 func route(e *gin.Engine) {
-	// group
 	unauthed := e.Group("/api/tl")
+	unauthed.Use(middleware.Cors())
 	// route
 	unauthed.POST("/quiz/new", api.GenQuiz)
 	unauthed.POST("/quiz/correct", api.CommitQuizQuestion)
