@@ -10,7 +10,7 @@ import (
 )
 
 const (
-	appFileName = "app.test.toml"
+	appFileName = "app.toml"
 )
 
 var (
