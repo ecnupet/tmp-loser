@@ -32,7 +32,7 @@ func (rw *QuestionRW) Insert(question *model.Question) error {
 	return err
 }
 
-func (rw *QuestionRW) GetQuestionByType(t string) ([]*model.Question, error) {
+func (rw *QuestionRW) GetQuestionByType(t uint32) ([]*model.Question, error) {
 	questions := make([]*model.Question, 0)
 	err := rw.engine.Table(rw.TableName()).Where("type = ?", t).Find(&questions)
 	if err != nil {

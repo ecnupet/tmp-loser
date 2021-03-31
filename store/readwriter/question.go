@@ -13,7 +13,7 @@ type QuestionReadWriter interface {
 	Insert(question *model.Question) error
 
 	// GetQuestionByType根据类型获取所有的题目
-	GetQuestionByType(t string) ([]*model.Question, error)
+	GetQuestionByType(t uint32) ([]*model.Question, error)
 
 	// UpdateQuestion 更新题目
 	UpdateQuestion(questionID uint32, question *model.Question) error

@@ -47,11 +47,19 @@ func (rw *CommitHistoryRW) GetCommitsByUserNameAndQuizID(userName string, quizID
 
 func (rw *CommitHistoryRW) GetQuizIDByUserNameAndPageNoAndNum(userName string, page uint32, pageSize uint32) ([]uint32, error) {
 	quizIDs := make([]uint32, 0)
-	err := rw.engine.Table(rw.TableName()).Select("quiz_id").Where("user_name = ?", userName).Limit(int(pageSize), int((page-1)*pageSize)).Find(&quizIDs)
+	err := rw.engine.Table(rw.TableName()).Select("quiz_id").Where("user_name = ?", userName).GroupBy("quiz_id").Limit(int(pageSize), int((page-1)*pageSize)).Find(&quizIDs)
 	if err != nil {
 		return nil, err
 	}
 	return quizIDs, nil
+}
+func (rw *CommitHistoryRW) GetAllCommitsHistoryByUserNameAndQuizID(userName string, quizID uint32) ([]*model.CommitHistory, error) {
+	chs := make([]*model.CommitHistory, 0)
+	err := rw.engine.Table(rw.TableName()).Where("quiz_id = ? and user_name = ?", quizID, userName).Find(&chs)
+	if err != nil {
+		return nil, err
+	}
+	return chs, nil
 }
 
 func (rw *CommitHistoryRW) GetCommitsByQuestionID(questionID uint32) ([]*model.CommitHistory, error) {
@@ -70,4 +78,22 @@ func (rw *CommitHistoryRW) GetCommitByHistoryID(historyID uint32) ([]*model.Comm
 		return nil, err
 	}
 	return chs, nil
+}
+
+func (rw *CommitHistoryRW) GetQuizIDByUserName(userName string) ([]uint32, error) {
+	qids := []uint32{}
+	err := rw.engine.Table(rw.TableName()).Select("quiz_id").Where("user_name = ?", userName).Find(&qids)
+	if err != nil {
+		return nil, err
+	}
+	return qids, nil
+}
+
+func (rw *CommitHistoryRW) UpdateCommitHistory(q model.CommitHistory) error {
+	sql := "update commit_history set choose = ?,spend = ?,correct = ? where user_name = ? and quiz_id = ? and question_id = ?"
+	_, err := rw.engine.Table(rw.TableName()).Exec(sql, q.Choose, q.Spend, q.Correct, q.UserName, q.QuizID, q.QuestionID)
+	if err != nil {
+		return err
+	}
+	return nil
 }

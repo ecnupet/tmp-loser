@@ -28,7 +28,10 @@ func InitAndStart(c *conf.AppConfig) *http.Server {
 func route(e *gin.Engine) {
 	// group
 	unauthed := e.Group("/api/tl")
-	unauthed.GET("/quiz/new", api.GenQuiz)
-	unauthed.POST("/quiz/correct", api.CommitQuizQuestion)
 	// route
+	unauthed.POST("/quiz/new", api.GenQuiz)
+	unauthed.POST("/quiz/correct", api.CommitQuizQuestion)
+	unauthed.GET("/question/detail", api.GetQuestionDetail)
+	unauthed.GET("/quiz/history", api.GetQuizHistory)
+	unauthed.GET("/quiz/history/detail", api.GetQuizHistoryDetail)
 }

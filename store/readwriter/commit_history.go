@@ -13,11 +13,20 @@ type CommitHistoryReadWriter interface {
 	GetCommitsByUserNameAndQuizID(userName string, quizID uint32) ([]*model.CommitHistory, error)
 
 	// GetQuizIDByUserNameAndPageNoAndNum 分页查找某个用户的测验ID
-	GetQuizIDByUserNameAndPageNoAndNum(userID string, pageNo uint32, num uint32) ([]uint32, error)
+	GetQuizIDByUserNameAndPageNoAndNum(userName string, pageNo uint32, num uint32) ([]uint32, error)
+
+	// GetAllCommitsHistoryByUserNameAndQuizID 获取用户每次测试的信息
+	GetAllCommitsHistoryByUserNameAndQuizID(userName string, quizID uint32) ([]*model.CommitHistory, error)
+
+	// GetQuizIDByUserName 获取用户所有quizID
+	GetQuizIDByUserName(userName string)([]uint32, error)
 
 	// GetCommitsByQuestionID 获取指定题目ID的所有提交记录
 	GetCommitsByQuestionID(quizID uint32) ([]*model.CommitHistory, error)
 
 	// GetCommitByHistoryID
 	GetCommitByHistoryID(historyID uint32) ([]*model.CommitHistory, error)
+
+	// UpdateCommitHistory
+	UpdateCommitHistory(qq model.CommitHistory) error
 }

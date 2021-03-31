@@ -4,6 +4,7 @@ import (
 	"log"
 
 	"ecnu.space/tmp-loser/db"
+	"ecnu.space/tmp-loser/model"
 	"ecnu.space/tmp-loser/store"
 	"ecnu.space/tmp-loser/utils"
 	"github.com/gin-gonic/gin"
@@ -15,18 +16,28 @@ const (
 
 // 鉴权配置前，先假设提供user_name参数
 func GenQuiz(c *gin.Context) {
-	userName := c.Query("user_name")
-	t := c.Query("type")
-	questions, err := store.GetDB().QuestionRW.GetQuestionByType(t)
+	tt := model.NewQuizParams{}
+	err := c.ShouldBind(&tt)
 	if err != nil {
-		log.Println("GenQuiz GetQuestionByType error: ", err)
-		utils.HandleGetDBErr(c, err.Error())
+		log.Println("GenQuiz  err:", err)
+		utils.HandlePostQuizQuestionErr(c, err.Error())
 		return
 	}
+	userName := tt.UserName
+	ts := tt.Types
 	ratesMap := make(map[uint32]float32)
-	for _, question := range questions {
-		ratesMap[question.QuestionID] = GetQuestionCorrectRateByUser(userName, question.QuestionID)
+	for _, t := range ts {
+		questions, err := store.GetDB().QuestionRW.GetQuestionByType(t)
+		if err != nil {
+			log.Println("GenQuiz GetQuestionByType error: ", err)
+			utils.HandleGetDBErr(c, err.Error())
+			return
+		}
+		for _, question := range questions {
+			ratesMap[question.QuestionID] = GetQuestionCorrectRateByUser(userName, question.QuestionID)
+		}
 	}
+
 	// // 从小到大
 	// sort.Float64Slice(rates).Sort()
 	if len(ratesMap) < requiredQuestionNum {
@@ -34,7 +45,43 @@ func GenQuiz(c *gin.Context) {
 		utils.HandleGetNumErr(c, "GenQuiz shortage in question num")
 		return
 	}
-	utils.HandleGetSuccess(c, ratesMap)
+	quizQuestionRst := []uint32{}
+	for k, _ := range ratesMap {
+		quizQuestionRst = append(quizQuestionRst, k)
+	}
+	quizIDs, err := store.GetDB().CommitHistoryRW.GetQuizIDByUserName(userName)
+	if err != nil {
+		utils.HandleGetNumErr(c, "GenQuiz err: "+err.Error())
+		return
+	}
+
+	if len(quizIDs) == 0 {
+		quizIDs = append(quizIDs, 0)
+		log.Println("GenQuiz user have no quiz")
+	}
+	quizID := GetMax(quizIDs) + uint32(1)
+	for _, qid := range quizQuestionRst {
+		store.GetDB().CommitHistoryRW.Insert(&model.CommitHistory{
+			UserName: tt.UserName,
+			QuestionID: qid,
+			QuizID: quizID,
+
+		})
+	}
+	utils.HandleGetSuccess(c, model.NewQuizResult{
+		QuestionID: quizQuestionRst,
+		QuizID:     quizID,
+	})
+}
+
+func GetMax(vs []uint32) uint32 {
+	max := vs[0]
+	for _, v := range vs {
+		if v > max {
+			max = v
+		}
+	}
+	return max
 }
 
 // GetQuestionCorrectRateByUser get correct rate in redis

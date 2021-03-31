@@ -18,6 +18,7 @@ const (
 
 	//返回状态描述， 同步 C# person-manage服务的http返回格式，具体还得问hcs
 	GetSuccess    Detail = "获取成功"
+	GetFail		Detail = "获取失败"
 	GetFailForDB  Detail = "获取失败，数据库错误"
 	GetFailForNum Detail = "获取失败，题目不足"
 	PostSuccess   Detail = "上传成功"
@@ -40,7 +41,13 @@ func HandleGetDBErr(c *gin.Context, errString string) {
 		Data:   errString,
 	})
 }
-
+func HandleGetErr(c *gin.Context, errString string) {
+	c.JSON(int(BadRequest), Response{
+		State:  BadRequest,
+		Detail: GetFail,
+		Data:   errString,
+	})
+}
 func HandleGetNumErr(c *gin.Context, errString string) {
 	c.JSON(int(InternalError), Response{
 		State:  InternalError,

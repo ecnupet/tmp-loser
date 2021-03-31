@@ -9,7 +9,6 @@ type CommitHistory struct {
 	QuestionID uint32 `json:"question_id" xorm:"question_id"`
 	Choose     string `json:"choose" xorm:"choose"`
 	QuizID     uint32 `json:"quiz_id" xorm:"quiz_id"`
-	Order      uint32 `json:"order" xorm:"order"`
 	// 0: 错误, 1: 正确, 2: 未选择
 	Correct   uint32    `json:"correct" xorm:"correct"`
 	Spend     uint32    `json:"spend" xorm:"spend"`
