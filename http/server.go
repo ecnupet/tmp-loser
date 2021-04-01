@@ -21,15 +21,12 @@ func NewServer(c *conf.AppConfig, opts ...Option) (s *Server) {
 	g := gin.Default()
 	// cors
 	g.Use(cors.New(cors.Config{
-		AllowOrigins:     []string{"*"},
-		AllowMethods:     []string{"PUT", "PATCH", "OPTIONS", "GET", "POST"},
+		AllowOrigins:     []string{"https://www.ecnu.space", "https://*.ecnu.space"},
+		AllowMethods:     []string{"GET", "POST", "PUT", "PATCH", "DELETE", "HEAD"},
 		AllowHeaders:     []string{"Origin", "x-requested-with", "Referer", "User-Agent"},
 		ExposeHeaders:    []string{"Content-Length"},
 		AllowCredentials: true,
-		AllowOriginFunc: func(origin string) bool {
-			return origin == "*"
-		},
-		MaxAge: 12 * time.Hour,
+		MaxAge:           12 * time.Hour,
 	}))
 	s = &Server{g: g}
 	s.Server = &http.Server{
