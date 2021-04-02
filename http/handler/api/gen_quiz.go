@@ -2,6 +2,7 @@ package api
 
 import (
 	"log"
+	"sync"
 
 	"ecnu.space/tmp-loser/db"
 	"ecnu.space/tmp-loser/model"
@@ -11,7 +12,15 @@ import (
 )
 
 const (
-	requiredQuestionNum = 1
+	requiredQuestionNumLowBound = 1
+	questionNumPerType  = 5
+)
+
+var (
+	// map 互斥锁
+	mutex           sync.Mutex
+	wg              sync.WaitGroup
+	questionIDSlice []uint32
 )
 
 // 鉴权配置前，先假设提供user_name参数
@@ -25,7 +34,7 @@ func GenQuiz(c *gin.Context) {
 	}
 	userName := tt.UserName
 	ts := tt.Types
-	ratesMap := make(map[uint32]float32)
+	// ratesMap := make(map[uint32]float32)
 	for _, t := range ts {
 		questions, err := store.GetDB().QuestionRW.GetQuestionByType(t)
 		if err != nil {
@@ -33,22 +42,29 @@ func GenQuiz(c *gin.Context) {
 			utils.HandleGetDBErr(c, err.Error())
 			return
 		}
-		for _, question := range questions {
-			ratesMap[question.QuestionID] = GetQuestionCorrectRateByUser(userName, question.QuestionID)
-		}
+		wg.Add(1)
+		go func() {
+			for i := 0; i < questionNumPerType && i < len(questions); i++ {
+				mutex.Lock()
+				questionIDSlice = append(questionIDSlice, questions[i].QuestionID)
+				mutex.Unlock()
+			}
+			wg.Done()
+		}()
 	}
+	wg.Wait()
 
 	// // 从小到大
 	// sort.Float64Slice(rates).Sort()
-	if len(ratesMap) < requiredQuestionNum {
+	if len(questionIDSlice) < requiredQuestionNumLowBound {
 		log.Println("GenQuiz shortage in question num")
 		utils.HandleGetNumErr(c, "GenQuiz shortage in question num")
 		return
 	}
-	quizQuestionRst := []uint32{}
-	for k, _ := range ratesMap {
-		quizQuestionRst = append(quizQuestionRst, k)
-	}
+	// quizQuestionRst := []uint32{}
+	// for k, _ := range ratesMap {
+	// 	quizQuestionRst = append(quizQuestionRst, k)
+	// }
 	quizIDs, err := store.GetDB().CommitHistoryRW.GetQuizIDByUserName(userName)
 	if err != nil {
 		utils.HandleGetNumErr(c, "GenQuiz err: "+err.Error())
@@ -60,16 +76,15 @@ func GenQuiz(c *gin.Context) {
 		log.Println("GenQuiz user have no quiz")
 	}
 	quizID := GetMax(quizIDs) + uint32(1)
-	for _, qid := range quizQuestionRst {
+	for _, qid := range questionIDSlice {
 		store.GetDB().CommitHistoryRW.Insert(&model.CommitHistory{
-			UserName: tt.UserName,
+			UserName:   tt.UserName,
 			QuestionID: qid,
-			QuizID: quizID,
-
+			QuizID:     quizID,
 		})
 	}
 	utils.HandleGetSuccess(c, model.NewQuizResult{
-		QuestionID: quizQuestionRst,
+		QuestionID: questionIDSlice,
 		QuizID:     quizID,
 	})
 }
@@ -97,3 +112,11 @@ func GetQuestionCorrectRateByUser(userName string, questionID uint32) float32 {
 	}
 	return float32(1)
 }
+
+// getMultiRandNum top must over num
+// func getMultiRandNum(top int, num int) []int {
+// 	if top < num {
+// 		return []int{}
+// 	}
+
+// }
