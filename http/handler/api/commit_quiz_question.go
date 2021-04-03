@@ -12,6 +12,14 @@ import (
 
 // CommitQuizQUestion 批改提交的指定题目的回答数据，并插入到数据库
 func CommitQuizQuestion(c *gin.Context) {
+	userNameAny, e := c.Get("user_name")
+	if userNameAny == nil && !e {
+		utils.HandleGetDBErr(c, "userName quizId 缺一不可")
+		return
+
+	}
+	userName := userNameAny.(string)
+
 	cqp := model.CheckQuestinoParams{}
 	err := c.ShouldBind(&cqp)
 	if err != nil {
@@ -19,6 +27,7 @@ func CommitQuizQuestion(c *gin.Context) {
 		utils.HandlePostQuizQuestionErr(c, err.Error())
 		return
 	}
+	cqp.UserName = userName
 	if cqp.UserName == "" || cqp.QuestinoID == 0 || cqp.QuizID == 0 {
 		utils.HandlePostQuizQuestionErr(c, "userName questionId quizId 缺一不可")
 		return
