@@ -12,6 +12,10 @@ import (
 func GetQuizHistoryDetail(c *gin.Context) {
 	userName := c.Query("userName")
 	quizId := c.Query("quizId")
+	if userName == "" || quizId == ""{
+		utils.HandleGetDBErr(c, "userName quizId 缺一不可")
+		return
+	}
 	quizIdInt, err := strconv.Atoi(quizId)
 	if err != nil {
 		utils.HandleGetErr(c, "GetQuizDetail quizId Atoi fail")
