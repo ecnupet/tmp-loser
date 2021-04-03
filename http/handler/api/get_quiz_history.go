@@ -3,6 +3,7 @@ package api
 import (
 	"log"
 	"strconv"
+	"time"
 
 	"ecnu.space/tmp-loser/model"
 	"ecnu.space/tmp-loser/store"
@@ -48,7 +49,7 @@ func GetQuizHistory(c *gin.Context) {
 			utils.HandleGetDBErr(c, "GetQuizHistory no commit history in quiz")
 			return
 		}
-		startTime := chs[0].CreatedAt.Format(timeFormat)
+		startTime := chs[0].CreatedAt.Add(time.Hour*8).Format(timeFormat)
 		point := uint32(0)
 		for _, ch := range chs {
 			log.Println(ch)
