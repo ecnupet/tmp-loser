@@ -1,6 +1,8 @@
 package api
 
 import (
+	"log"
+
 	"ecnu.space/tmp-loser/store"
 	"ecnu.space/tmp-loser/utils"
 	"github.com/gin-gonic/gin"
@@ -13,6 +15,7 @@ func GetQuizHistoryNum(c *gin.Context) {
 		return
 	}
 	ids, err := store.GetDB().CommitHistoryRW.GetQuizIDByUserName(userName)
+	log.Println(ids)
 	if err != nil {
 		utils.HandleGetDBErr(c, "GetQuizHistoryNum err: "+err.Error())
 		return

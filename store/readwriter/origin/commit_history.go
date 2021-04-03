@@ -82,7 +82,7 @@ func (rw *CommitHistoryRW) GetCommitByHistoryID(historyID uint32) ([]*model.Comm
 
 func (rw *CommitHistoryRW) GetQuizIDByUserName(userName string) ([]uint32, error) {
 	qids := []uint32{}
-	err := rw.engine.Table(rw.TableName()).Select("quiz_id").Where("user_name = ?", userName).Find(&qids)
+	err := rw.engine.Table(rw.TableName()).Select("quiz_id").Where("user_name = ?", userName).GroupBy("quiz_id").Find(&qids)
 	if err != nil {
 		return nil, err
 	}
