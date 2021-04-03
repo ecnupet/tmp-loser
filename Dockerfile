@@ -1,4 +1,4 @@
-FROM golang:1.16.3-alpine3.13 AS builder
+FROM golang:1.15-alpine3.13 AS builder
 ARG BUILD_ID
 LABEL stage=builder
 LABEL build=$BUILD_ID
