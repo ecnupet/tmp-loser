@@ -1,6 +1,7 @@
 package api
 
 import (
+	"log"
 	"strconv"
 
 	"ecnu.space/tmp-loser/model"
@@ -55,6 +56,11 @@ func GetQuizHistoryDetail(c *gin.Context) {
 			Answer: qinfo.Answer,
 			Choice: ch.Choose,
 			Spend: ch.Spend,
+		}
+		log.Println("choice为： ", ch.Choose)
+		if ch.Choose == "" {
+			log.Println("choice 是空串")
+			qr.Choice = nil
 		}
 		qrs = append(qrs, qr)
 	}

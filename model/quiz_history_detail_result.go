@@ -6,8 +6,8 @@ type QuizHistoryDetailResultQuestion struct {
 	Type        uint32            `json:"type"`
 	Options     map[string]string `json:"options"`
 	Duration    uint32            `json:"duration"`
-	Answer      string            `json:"answer"`
-	Choice      string            `json:"choice"`
+	Answer      string           `json:"answer"`
+	Choice      interface{}            `json:"choice"`
 	Spend       uint32            `json:"spend"`
 }
 

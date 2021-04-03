@@ -30,6 +30,7 @@ func CommitQuizQuestion(c *gin.Context) {
 		utils.HandlePostDBErr(c, err.Error())
 		return
 	}
+
 	ch := model.CommitHistory{
 		QuestionID: cqp.QuestinoID,
 		// 临时设置，之后用person-manage grpc服务处理用户的token, 拿到用户名
@@ -39,6 +40,8 @@ func CommitQuizQuestion(c *gin.Context) {
 		Spend:    cqp.TimeSpend,
 		Correct:  rst,
 	}
+
+
 	err = store.GetDB().CommitHistoryRW.UpdateCommitHistory(ch)
 	if err != nil {
 		log.Println("CommitQuizQuestion 3 err:", err)

@@ -1,6 +1,7 @@
 package api
 
 import (
+	"fmt"
 	"log"
 	"sync"
 
@@ -13,18 +14,19 @@ import (
 
 const (
 	requiredQuestionNumLowBound = 1
-	questionNumPerType  = 5
+	questionNumPerType          = 5
 )
 
 var (
 	// map 互斥锁
 	mutex           sync.Mutex
 	wg              sync.WaitGroup
-	questionIDSlice []uint32
 )
 
 // 鉴权配置前，先假设提供user_name参数
 func GenQuiz(c *gin.Context) {
+	questionIDSlice := []uint32{}
+	log.Println("执行次数：",11)
 	tt := model.NewQuizParams{}
 	err := c.ShouldBind(&tt)
 	if err != nil {
@@ -35,22 +37,25 @@ func GenQuiz(c *gin.Context) {
 	userName := tt.UserName
 	ts := tt.Types
 	// ratesMap := make(map[uint32]float32)
+	fmt.Println("题目类型： ", ts)
 	for _, t := range ts {
-		questions, err := store.GetDB().QuestionRW.GetQuestionByType(t)
-		if err != nil {
-			log.Println("GenQuiz GetQuestionByType error: ", err)
-			utils.HandleGetDBErr(c, err.Error())
-			return
-		}
+		log.Println("查询题目类型:", t)
 		wg.Add(1)
-		go func() {
+		go func(t uint32) {
+			questions, err := store.GetDB().QuestionRW.GetQuestionByType(t)
+			if err != nil {
+				log.Println("GenQuiz GetQuestionByType error: ", err)
+				utils.HandleGetDBErr(c, err.Error())
+				return
+			}
 			for i := 0; i < questionNumPerType && i < len(questions); i++ {
 				mutex.Lock()
 				questionIDSlice = append(questionIDSlice, questions[i].QuestionID)
+				fmt.Println("questions: ", questionIDSlice)
 				mutex.Unlock()
 			}
 			wg.Done()
-		}()
+		}(t)
 	}
 	wg.Wait()
 
