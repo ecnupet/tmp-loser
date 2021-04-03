@@ -40,7 +40,7 @@ func CommitQuizQuestion(c *gin.Context) {
 		Spend:    cqp.TimeSpend,
 		Correct:  rst,
 	}
-
+	log.Println("cqp timeSpend: ", cqp.TimeSpend)
 
 	err = store.GetDB().CommitHistoryRW.UpdateCommitHistory(ch)
 	if err != nil {
