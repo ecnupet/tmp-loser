@@ -87,3 +87,39 @@ func HandlePostDBErr(c *gin.Context, errString string) {
 		Data:   errString,
 	})
 }
+
+func GrpcErr(c *gin.Context, errString string) {
+	c.JSON(401, struct {
+		State  int    `json:"state"`
+		Detail string `json:"detail"`
+		Data   string `json:"data"`
+	}{
+		State:  401,
+		Detail: "grpc请求失败",
+		Data:   errString,
+	})
+}
+
+func AuthErr(c *gin.Context, errString string) {
+	c.JSON(401, struct {
+		State  int    `json:"state"`
+		Detail string `json:"detail"`
+		Data   string `json:"data"`
+	}{
+		State:  401,
+		Detail: "鉴权失败, 请登录",
+		Data:   "",
+	})
+}
+
+func ExtractCookieErr(c *gin.Context, errString string) {
+	c.JSON(401, struct {
+		State  int    `json:"state"`
+		Detail string `json:"detail"`
+		Data   string `json:"data"`
+	}{
+		State:  401,
+		Detail: "提取Cookie失败",
+		Data:   errString,
+	})
+}

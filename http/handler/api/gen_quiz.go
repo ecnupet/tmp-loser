@@ -25,6 +25,12 @@ var (
 
 // 鉴权配置前，先假设提供user_name参数
 func GenQuiz(c *gin.Context) {
+	userNameAny, e := c.Get("user_name")
+	if userNameAny == nil && !e {
+		utils.HandleGetDBErr(c, "userName quizId 缺一不可")
+		return
+	}
+	userName := userNameAny.(string)
 	questionIDSlice := []uint32{}
 	log.Println("执行次数：",11)
 	tt := model.NewQuizParams{}
@@ -34,7 +40,6 @@ func GenQuiz(c *gin.Context) {
 		utils.HandlePostQuizQuestionErr(c, err.Error())
 		return
 	}
-	userName := tt.UserName
 	ts := tt.Types
 	// ratesMap := make(map[uint32]float32)
 	fmt.Println("题目类型： ", ts)

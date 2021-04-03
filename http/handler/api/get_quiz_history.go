@@ -16,7 +16,8 @@ const (
 )
 
 func GetQuizHistory(c *gin.Context) {
-	userName := c.Query("userName")
+	userNameAny, _ := c.Get("user_name")
+	userName := userNameAny.(string)
 	page := c.Query("page")
 	pageInt, err := strconv.Atoi(page)
 	if err != nil {

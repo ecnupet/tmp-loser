@@ -9,7 +9,8 @@ import (
 )
 
 func GetQuizHistoryNum(c *gin.Context) {
-	userName := c.Query("userName")
+	userNameAny, _ := c.Get("user_name")
+	userName := userNameAny.(string)
 	if userName == "" {
 		utils.HandleGetErr(c, "userName doesn't exist")
 		return

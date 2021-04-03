@@ -7,6 +7,7 @@ import (
 	"ecnu.space/tmp-loser/conf"
 	"ecnu.space/tmp-loser/http/handler/api"
 	"github.com/gin-gonic/gin"
+	"ecnu.space/tmp-loser/http/handler/middleware"
 )
 
 // InitAndStart init http and start service
@@ -26,6 +27,7 @@ func InitAndStart(c *conf.AppConfig) *http.Server {
 
 //route provide http routes to invoke handler
 func route(e *gin.Engine) {
+	e.Use(middleware.Auth())
 	unauthed := e.Group("/api/tl")
 	// POST route
 	unauthed.POST("test", api.TestPost)
