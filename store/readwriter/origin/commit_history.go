@@ -97,3 +97,12 @@ func (rw *CommitHistoryRW) UpdateCommitHistory(q model.CommitHistory) error {
 	}
 	return nil
 }
+
+func (rw *CommitHistoryRW) GetUserAllCommitHistory(userName string) ([]*model.CommitHistory, error) {
+	chs := make([]*model.CommitHistory, 0)
+	err := rw.engine.Table(rw.TableName()).Where("user_name = ?", userName).Find(&chs)
+	if err != nil {
+		return nil, err
+	}
+	return chs, nil
+}

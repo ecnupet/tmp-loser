@@ -5,7 +5,6 @@
 package mock
 
 import (
-	context "context"
 	model "ecnu.space/tmp-loser/model"
 	gomock "github.com/golang/mock/gomock"
 	reflect "reflect"
@@ -35,58 +34,73 @@ func (m *MockQuestionReadWriter) EXPECT() *MockQuestionReadWriterMockRecorder {
 }
 
 // BatchInsert mocks base method
-func (m *MockQuestionReadWriter) BatchInsert(ctx context.Context, quizs []*model.Question) error {
+func (m *MockQuestionReadWriter) BatchInsert(quizs []*model.Question) error {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "BatchInsert", ctx, quizs)
+	ret := m.ctrl.Call(m, "BatchInsert", quizs)
 	ret0, _ := ret[0].(error)
 	return ret0
 }
 
 // BatchInsert indicates an expected call of BatchInsert
-func (mr *MockQuestionReadWriterMockRecorder) BatchInsert(ctx, quizs interface{}) *gomock.Call {
+func (mr *MockQuestionReadWriterMockRecorder) BatchInsert(quizs interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "BatchInsert", reflect.TypeOf((*MockQuestionReadWriter)(nil).BatchInsert), ctx, quizs)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "BatchInsert", reflect.TypeOf((*MockQuestionReadWriter)(nil).BatchInsert), quizs)
 }
 
 // Insert mocks base method
-func (m *MockQuestionReadWriter) Insert(ctx context.Context, question *model.Question) error {
+func (m *MockQuestionReadWriter) Insert(question *model.Question) error {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Insert", ctx, question)
+	ret := m.ctrl.Call(m, "Insert", question)
 	ret0, _ := ret[0].(error)
 	return ret0
 }
 
 // Insert indicates an expected call of Insert
-func (mr *MockQuestionReadWriterMockRecorder) Insert(ctx, question interface{}) *gomock.Call {
+func (mr *MockQuestionReadWriterMockRecorder) Insert(question interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Insert", reflect.TypeOf((*MockQuestionReadWriter)(nil).Insert), ctx, question)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Insert", reflect.TypeOf((*MockQuestionReadWriter)(nil).Insert), question)
 }
 
 // GetQuestionByType mocks base method
-func (m *MockQuestionReadWriter) GetQuestionByType(ctx context.Context, t string) ([]*model.Question, error) {
+func (m *MockQuestionReadWriter) GetQuestionByType(t uint32) ([]*model.Question, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetQuestionByType", ctx, t)
+	ret := m.ctrl.Call(m, "GetQuestionByType", t)
 	ret0, _ := ret[0].([]*model.Question)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
 // GetQuestionByType indicates an expected call of GetQuestionByType
-func (mr *MockQuestionReadWriterMockRecorder) GetQuestionByType(ctx, t interface{}) *gomock.Call {
+func (mr *MockQuestionReadWriterMockRecorder) GetQuestionByType(t interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetQuestionByType", reflect.TypeOf((*MockQuestionReadWriter)(nil).GetQuestionByType), ctx, t)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetQuestionByType", reflect.TypeOf((*MockQuestionReadWriter)(nil).GetQuestionByType), t)
 }
 
 // UpdateQuestion mocks base method
-func (m *MockQuestionReadWriter) UpdateQuestion(ctx context.Context, questionID uint64, question *model.Question) error {
+func (m *MockQuestionReadWriter) UpdateQuestion(questionID uint32, question *model.Question) error {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "UpdateQuestion", ctx, questionID, question)
+	ret := m.ctrl.Call(m, "UpdateQuestion", questionID, question)
 	ret0, _ := ret[0].(error)
 	return ret0
 }
 
 // UpdateQuestion indicates an expected call of UpdateQuestion
-func (mr *MockQuestionReadWriterMockRecorder) UpdateQuestion(ctx, questionID, question interface{}) *gomock.Call {
+func (mr *MockQuestionReadWriterMockRecorder) UpdateQuestion(questionID, question interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateQuestion", reflect.TypeOf((*MockQuestionReadWriter)(nil).UpdateQuestion), ctx, questionID, question)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateQuestion", reflect.TypeOf((*MockQuestionReadWriter)(nil).UpdateQuestion), questionID, question)
+}
+
+// GetQuestionById mocks base method
+func (m *MockQuestionReadWriter) GetQuestionById(questionID uint32) ([]*model.Question, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetQuestionById", questionID)
+	ret0, _ := ret[0].([]*model.Question)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetQuestionById indicates an expected call of GetQuestionById
+func (mr *MockQuestionReadWriterMockRecorder) GetQuestionById(questionID interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetQuestionById", reflect.TypeOf((*MockQuestionReadWriter)(nil).GetQuestionById), questionID)
 }

@@ -5,7 +5,6 @@
 package mock
 
 import (
-	context "context"
 	model "ecnu.space/tmp-loser/model"
 	gomock "github.com/golang/mock/gomock"
 	reflect "reflect"
@@ -35,60 +34,135 @@ func (m *MockCommitHistoryReadWriter) EXPECT() *MockCommitHistoryReadWriterMockR
 }
 
 // Insert mocks base method
-func (m *MockCommitHistoryReadWriter) Insert(ctx context.Context, commit *model.CommitHistory) error {
+func (m *MockCommitHistoryReadWriter) Insert(commit *model.CommitHistory) (int32, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Insert", ctx, commit)
-	ret0, _ := ret[0].(error)
-	return ret0
+	ret := m.ctrl.Call(m, "Insert", commit)
+	ret0, _ := ret[0].(int32)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
 }
 
 // Insert indicates an expected call of Insert
-func (mr *MockCommitHistoryReadWriterMockRecorder) Insert(ctx, commit interface{}) *gomock.Call {
+func (mr *MockCommitHistoryReadWriterMockRecorder) Insert(commit interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Insert", reflect.TypeOf((*MockCommitHistoryReadWriter)(nil).Insert), ctx, commit)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Insert", reflect.TypeOf((*MockCommitHistoryReadWriter)(nil).Insert), commit)
 }
 
 // GetCommitsByUserNameAndQuizID mocks base method
-func (m *MockCommitHistoryReadWriter) GetCommitsByUserNameAndQuizID(ctx context.Context, userName string, quizID uint64) ([]*model.CommitHistory, error) {
+func (m *MockCommitHistoryReadWriter) GetCommitsByUserNameAndQuizID(userName string, quizID uint32) ([]*model.CommitHistory, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetCommitsByUserNameAndQuizID", ctx, userName, quizID)
+	ret := m.ctrl.Call(m, "GetCommitsByUserNameAndQuizID", userName, quizID)
 	ret0, _ := ret[0].([]*model.CommitHistory)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
 // GetCommitsByUserNameAndQuizID indicates an expected call of GetCommitsByUserNameAndQuizID
-func (mr *MockCommitHistoryReadWriterMockRecorder) GetCommitsByUserNameAndQuizID(ctx, userName, quizID interface{}) *gomock.Call {
+func (mr *MockCommitHistoryReadWriterMockRecorder) GetCommitsByUserNameAndQuizID(userName, quizID interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetCommitsByUserNameAndQuizID", reflect.TypeOf((*MockCommitHistoryReadWriter)(nil).GetCommitsByUserNameAndQuizID), ctx, userName, quizID)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetCommitsByUserNameAndQuizID", reflect.TypeOf((*MockCommitHistoryReadWriter)(nil).GetCommitsByUserNameAndQuizID), userName, quizID)
 }
 
 // GetQuizIDByUserNameAndPageNoAndNum mocks base method
-func (m *MockCommitHistoryReadWriter) GetQuizIDByUserNameAndPageNoAndNum(ctx context.Context, userID string, pageNo, num uint64) ([]uint64, error) {
+func (m *MockCommitHistoryReadWriter) GetQuizIDByUserNameAndPageNoAndNum(userName string, pageNo, num uint32) ([]uint32, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetQuizIDByUserNameAndPageNoAndNum", ctx, userID, pageNo, num)
-	ret0, _ := ret[0].([]uint64)
+	ret := m.ctrl.Call(m, "GetQuizIDByUserNameAndPageNoAndNum", userName, pageNo, num)
+	ret0, _ := ret[0].([]uint32)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
 // GetQuizIDByUserNameAndPageNoAndNum indicates an expected call of GetQuizIDByUserNameAndPageNoAndNum
-func (mr *MockCommitHistoryReadWriterMockRecorder) GetQuizIDByUserNameAndPageNoAndNum(ctx, userID, pageNo, num interface{}) *gomock.Call {
+func (mr *MockCommitHistoryReadWriterMockRecorder) GetQuizIDByUserNameAndPageNoAndNum(userName, pageNo, num interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetQuizIDByUserNameAndPageNoAndNum", reflect.TypeOf((*MockCommitHistoryReadWriter)(nil).GetQuizIDByUserNameAndPageNoAndNum), ctx, userID, pageNo, num)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetQuizIDByUserNameAndPageNoAndNum", reflect.TypeOf((*MockCommitHistoryReadWriter)(nil).GetQuizIDByUserNameAndPageNoAndNum), userName, pageNo, num)
+}
+
+// GetAllCommitsHistoryByUserNameAndQuizID mocks base method
+func (m *MockCommitHistoryReadWriter) GetAllCommitsHistoryByUserNameAndQuizID(userName string, quizID uint32) ([]*model.CommitHistory, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetAllCommitsHistoryByUserNameAndQuizID", userName, quizID)
+	ret0, _ := ret[0].([]*model.CommitHistory)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetAllCommitsHistoryByUserNameAndQuizID indicates an expected call of GetAllCommitsHistoryByUserNameAndQuizID
+func (mr *MockCommitHistoryReadWriterMockRecorder) GetAllCommitsHistoryByUserNameAndQuizID(userName, quizID interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetAllCommitsHistoryByUserNameAndQuizID", reflect.TypeOf((*MockCommitHistoryReadWriter)(nil).GetAllCommitsHistoryByUserNameAndQuizID), userName, quizID)
+}
+
+// GetQuizIDByUserName mocks base method
+func (m *MockCommitHistoryReadWriter) GetQuizIDByUserName(userName string) ([]uint32, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetQuizIDByUserName", userName)
+	ret0, _ := ret[0].([]uint32)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetQuizIDByUserName indicates an expected call of GetQuizIDByUserName
+func (mr *MockCommitHistoryReadWriterMockRecorder) GetQuizIDByUserName(userName interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetQuizIDByUserName", reflect.TypeOf((*MockCommitHistoryReadWriter)(nil).GetQuizIDByUserName), userName)
 }
 
 // GetCommitsByQuestionID mocks base method
-func (m *MockCommitHistoryReadWriter) GetCommitsByQuestionID(ctx context.Context, quizID uint64) ([]*model.CommitHistory, error) {
+func (m *MockCommitHistoryReadWriter) GetCommitsByQuestionID(quizID uint32) ([]*model.CommitHistory, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetCommitsByQuestionID", ctx, quizID)
+	ret := m.ctrl.Call(m, "GetCommitsByQuestionID", quizID)
 	ret0, _ := ret[0].([]*model.CommitHistory)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
 // GetCommitsByQuestionID indicates an expected call of GetCommitsByQuestionID
-func (mr *MockCommitHistoryReadWriterMockRecorder) GetCommitsByQuestionID(ctx, quizID interface{}) *gomock.Call {
+func (mr *MockCommitHistoryReadWriterMockRecorder) GetCommitsByQuestionID(quizID interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetCommitsByQuestionID", reflect.TypeOf((*MockCommitHistoryReadWriter)(nil).GetCommitsByQuestionID), ctx, quizID)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetCommitsByQuestionID", reflect.TypeOf((*MockCommitHistoryReadWriter)(nil).GetCommitsByQuestionID), quizID)
+}
+
+// GetCommitByHistoryID mocks base method
+func (m *MockCommitHistoryReadWriter) GetCommitByHistoryID(historyID uint32) ([]*model.CommitHistory, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetCommitByHistoryID", historyID)
+	ret0, _ := ret[0].([]*model.CommitHistory)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetCommitByHistoryID indicates an expected call of GetCommitByHistoryID
+func (mr *MockCommitHistoryReadWriterMockRecorder) GetCommitByHistoryID(historyID interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetCommitByHistoryID", reflect.TypeOf((*MockCommitHistoryReadWriter)(nil).GetCommitByHistoryID), historyID)
+}
+
+// UpdateCommitHistory mocks base method
+func (m *MockCommitHistoryReadWriter) UpdateCommitHistory(qq model.CommitHistory) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "UpdateCommitHistory", qq)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// UpdateCommitHistory indicates an expected call of UpdateCommitHistory
+func (mr *MockCommitHistoryReadWriterMockRecorder) UpdateCommitHistory(qq interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateCommitHistory", reflect.TypeOf((*MockCommitHistoryReadWriter)(nil).UpdateCommitHistory), qq)
+}
+
+// GetUserAllCommitHistory mocks base method
+func (m *MockCommitHistoryReadWriter) GetUserAllCommitHistory(username string) ([]*model.CommitHistory, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetUserAllCommitHistory", username)
+	ret0, _ := ret[0].([]*model.CommitHistory)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetUserAllCommitHistory indicates an expected call of GetUserAllCommitHistory
+func (mr *MockCommitHistoryReadWriterMockRecorder) GetUserAllCommitHistory(username interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetUserAllCommitHistory", reflect.TypeOf((*MockCommitHistoryReadWriter)(nil).GetUserAllCommitHistory), username)
 }

@@ -29,4 +29,7 @@ type CommitHistoryReadWriter interface {
 
 	// UpdateCommitHistory
 	UpdateCommitHistory(qq model.CommitHistory) error
+
+	// 获取用户所有的提交记录
+	GetUserAllCommitHistory(username string) ([]*model.CommitHistory, error)
 }

@@ -40,4 +40,5 @@ func route(e *gin.Engine) {
 	unauthed.GET("/quiz/history", api.GetQuizHistory)
 	unauthed.GET("/quiz/history/detail", api.GetQuizHistoryDetail)
 	unauthed.GET("/quiz/history/num", api.GetQuizHistoryNum)
+	unauthed.GET("/statistics", api.GetStatistics)
 }

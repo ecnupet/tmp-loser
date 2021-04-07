@@ -2,7 +2,6 @@ package api
 
 import (
 	"log"
-
 	"ecnu.space/tmp-loser/store"
 	"ecnu.space/tmp-loser/utils"
 	"github.com/gin-gonic/gin"
