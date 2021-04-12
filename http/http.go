@@ -28,17 +28,18 @@ func InitAndStart(c *conf.AppConfig) *http.Server {
 //route provide http routes to invoke handler
 func route(e *gin.Engine) {
 	e.Use(middleware.Auth())
-	unauthed := e.Group("/api/tl")
+	authed := e.Group("/api/tl")
 	// POST route
-	unauthed.POST("test", api.TestPost)
-	unauthed.POST("test2", api.TestPost2Seconds)
-	unauthed.POST("/quiz/new", api.GenQuiz)
-	unauthed.POST("/quiz/correct", api.CommitQuizQuestion)
-	unauthed.POST("/question/insert", api.InsertQuestion)
+	authed.POST("test", api.TestPost)
+	authed.POST("test2", api.TestPost2Seconds)
+	authed.POST("/quiz/new", api.GenQuiz)
+	authed.POST("/quiz/correct", api.CommitQuizQuestion)
+	authed.POST("/question/insert", api.InsertQuestion)
 	// GET route
-	unauthed.GET("/question/detail", api.GetQuestionDetail)
-	unauthed.GET("/quiz/history", api.GetQuizHistory)
-	unauthed.GET("/quiz/history/detail", api.GetQuizHistoryDetail)
-	unauthed.GET("/quiz/history/num", api.GetQuizHistoryNum)
-	unauthed.GET("/statistics", api.GetStatistics)
+	authed.GET("/question/detail", api.GetQuestionDetail)
+	authed.GET("/quiz/history", api.GetQuizHistory)
+	authed.GET("/quiz/history/detail", api.GetQuizHistoryDetail)
+	authed.GET("/quiz/history/num", api.GetQuizHistoryNum)
+	authed.GET("/statistics", api.GetStatistics)
+	
 }
