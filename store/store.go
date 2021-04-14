@@ -10,7 +10,7 @@ import (
 
 var (
 	store *Store
-	mockStore *Store
+	mockStore *MockStore
 )
 // 包加载时执行
 func init(){
@@ -26,6 +26,11 @@ type Store struct {
 	QuestionRW          readwriter.QuestionReadWriter
 }
 
+type MockStore struct {
+	*mock.MockCommitHistoryReadWriter
+	*mock.MockQuestionReadWriter
+}
+
 func NewStore() *Store {
 	return &Store {
 		CommitHistoryRW:  origin.NewCommitHistoryRW(db.Engine),
@@ -33,16 +38,17 @@ func NewStore() *Store {
 	}
 }
 
-func newMockStore(c *gomock.Controller) *Store {
-	return &Store {
-		CommitHistoryRW: mock.NewMockCommitHistoryReadWriter(c),
-		QuestionRW: mock.NewMockQuestionReadWriter(c),
+func newMockStore(c *gomock.Controller) *MockStore {
+	return &MockStore {
+		mock.NewMockCommitHistoryReadWriter(c),
+		mock.NewMockQuestionReadWriter(c),
 	}
 }
 
 func GetDB() *Store {
-	if mockStore != nil {
-		return mockStore
-	}
 	return store
+}
+
+func GetMockDB() *MockStore {
+	return mockStore
 }

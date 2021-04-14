@@ -38,3 +38,4 @@ func GetQuestionDetail(c *gin.Context) {
 		Duration:    q.Duration,
 	})
 }
+

@@ -34,6 +34,7 @@ func route(e *gin.Engine) {
 	authed.POST("test2", api.TestPost2Seconds)
 	authed.POST("/quiz/new", api.GenQuiz)
 	authed.POST("/quiz/correct", api.CommitQuizQuestion)
+	// 问题插入接口
 	authed.POST("/question/insert", api.InsertQuestion)
 	// GET route
 	authed.GET("/question/detail", api.GetQuestionDetail)
@@ -41,5 +42,5 @@ func route(e *gin.Engine) {
 	authed.GET("/quiz/history/detail", api.GetQuizHistoryDetail)
 	authed.GET("/quiz/history/num", api.GetQuizHistoryNum)
 	authed.GET("/statistics", api.GetStatistics)
-	
+	// 问题更新接口
 }
