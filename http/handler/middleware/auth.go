@@ -26,7 +26,6 @@ func Auth() gin.HandlerFunc {
 		url := "https://backend.ecnu.space/api/pm/auth/check"
 		//提交请求
 		req, err := http.NewRequest("GET", url, nil)
-		fmt.Println("hah2")
 		//增加header选项
 		req.Header.Add("Cookie", ".AspNetCore.Cookies="+token)
 		req.Header.Add("Host", "www.ecnu.space")
@@ -62,6 +61,7 @@ func Auth() gin.HandlerFunc {
 		}
 
 		c.Set("user_name", auth.Data.Name)
+		c.Set("isAdmin", auth.Data.IsAdmin)
 		// client := personManage.GetPMClient()
 
 		// md := metadata.Pairs("Cookie", ".AspNetCore.Cookies="+token)

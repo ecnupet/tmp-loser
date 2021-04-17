@@ -123,3 +123,15 @@ func ExtractCookieErr(c *gin.Context, errString string) {
 		Data:   errString,
 	})
 }
+
+func HandleNotAdminErr(c *gin.Context, errString string){
+	c.JSON(401, struct {
+		State  int    `json:"state"`
+		Detail string `json:"detail"`
+		Data   string `json:"data"`
+	}{
+		State:  401,
+		Detail: "请确定您是否是管理员",
+		Data:   errString,
+	})
+}

@@ -34,13 +34,22 @@ func route(e *gin.Engine) {
 	authed.POST("test2", api.TestPost2Seconds)
 	authed.POST("/quiz/new", api.GenQuiz)
 	authed.POST("/quiz/correct", api.CommitQuizQuestion)
-	// 问题插入接口
-	authed.POST("/question/insert", api.InsertQuestion)
 	// GET route
 	authed.GET("/question/detail", api.GetQuestionDetail)
 	authed.GET("/quiz/history", api.GetQuizHistory)
 	authed.GET("/quiz/history/detail", api.GetQuizHistoryDetail)
 	authed.GET("/quiz/history/num", api.GetQuizHistoryNum)
 	authed.GET("/statistics", api.GetStatistics)
+
+	// 以下需要有管理员权限：
+	adminAuthed := e.Group("/api/tl/admin")
+	adminAuthed.Use(middleware.AdminAuth())
 	// 问题更新接口
+	adminAuthed.POST("/question/update", api.UpdateQuestionDetail)
+	// 问题插入接口
+	adminAuthed.POST("/question/insert", api.InsertQuestion)
+	// 按关键字分页模糊查询题目问题描述 所有题目信息
+	adminAuthed.GET("/question", api.SearchQuestion)
+	adminAuthed.GET("/question/num", api.SearchQuestionNum)
+	adminAuthed.POST("/question/delete", api.DeleteQuestion)
 }

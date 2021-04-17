@@ -20,4 +20,19 @@ type QuestionReadWriter interface {
 
 	// GetQuestionById get question by id
 	GetQuestionById(questionID uint32) ([]*model.Question, error)
+
+	// FuzzySearch 根据关键字模糊查询
+	FuzzySearchByPage(keyword string, page, pageSize uint32)([]*model.Question, error) 
+
+	// FuzzySearchNum ...
+	FuzzySearchNum(keyword string)(int64, error)
+
+	// GetAllQuestion
+	GetAllQuestionNum()(int64, error)
+
+	// GetAllQuestionByPage
+	GetAllQuestionByPage(page, pageSize uint32)([]*model.Question, error)
+
+	// DeleteQuestionById
+	DeleteQuestion(questionId uint32)error
 }
