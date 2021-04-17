@@ -3,6 +3,7 @@ package api
 import (
 	"log"
 	"strconv"
+	"sync"
 	"time"
 
 	"ecnu.space/tmp-loser/model"
@@ -52,23 +53,31 @@ func GetQuizHistory(c *gin.Context) {
 		}
 		startTime := chs[0].CreatedAt.Add(time.Hour*8).Format(timeFormat)
 		point := uint32(0)
+		wg := sync.WaitGroup{}
 		for _, ch := range chs {
-			log.Println(ch)
-			costTime += ch.Spend
-			if ch.Correct == 1 {
-				point += 10
-			}
-			qs, err := store.GetDB().QuestionRW.GetQuestionById(ch.QuestionID)
-			if err != nil {
-				utils.HandleGetDBErr(c, "GetQuizHistory GetQuestionById err :"+err.Error())
-				return
-			}
-			for _, q := range qs {
-				if notIn(types, q.Type) {
-					types = append(types, q.Type)
+			wg.Add(1)
+			go func(ch *model.CommitHistory){
+				defer func(){
+					wg.Done()
+				}()
+				log.Println(ch)
+				costTime += ch.Spend
+				if ch.Correct == 1 {
+					point += 10
 				}
-			}
+				qs, err := store.GetDB().QuestionRW.GetQuestionById(ch.QuestionID)
+				if err != nil {
+					utils.HandleGetDBErr(c, "GetQuizHistory GetQuestionById err :"+err.Error())
+					return
+				}
+				for _, q := range qs {
+					if notIn(types, q.Type) {
+						types = append(types, q.Type)
+					}
+				}
+			}(ch)
 		}
+		wg.Wait()
 		quizInfos = append(quizInfos, model.QuizHistoryResult{
 			QuizID:    qid,
 			Types:     types,
@@ -78,7 +87,6 @@ func GetQuizHistory(c *gin.Context) {
 		})
 	}
 	utils.HandleGetSuccess(c, quizInfos)
-
 }
 
 func notIn(arr []uint32, n uint32) bool {
