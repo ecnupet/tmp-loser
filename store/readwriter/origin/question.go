@@ -65,7 +65,7 @@ func (rw *QuestionRW) FuzzySearchByPage(keyword string, page, pageSize uint32) (
 }
 
 func (rw *QuestionRW) FuzzySearchNum(keyword string) (count int64, err error) {
-	count, err = rw.engine.Table(rw.TableName()).Where("description LIKE '%"+keyword+"%'").Count()
+	count, err = rw.engine.Table(rw.TableName()).Where("description LIKE '%" + keyword + "%'").Count()
 	return
 }
 
@@ -76,14 +76,14 @@ func (rw *QuestionRW) GetAllQuestionNum() (count int64, err error) {
 
 func (rw *QuestionRW) GetAllQuestionByPage(page, pageSize uint32) ([]*model.Question, error) {
 	qs := make([]*model.Question, 0)
-	err := rw.engine.Table(rw.TableName()).Limit(int(pageSize), int((page-1)*pageSize)).Find(qs)
-	if err !=nil {
-		return nil ,err
+	err := rw.engine.Table(rw.TableName()).Limit(int(pageSize), int((page-1)*pageSize)).Find(&qs)
+	if err != nil {
+		return nil, err
 	}
 	return qs, nil
 }
 
-func (rw *QuestionRW) DeleteQuestion(questionId uint32)error {
+func (rw *QuestionRW) DeleteQuestion(questionId uint32) error {
 	q := model.Question{
 		QuestionID: questionId,
 	}
