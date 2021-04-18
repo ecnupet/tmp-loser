@@ -53,6 +53,7 @@ func HandleGetNumErr(c *gin.Context, errString string) {
 		State:  1,
 		Detail: GetFailForNum,
 		Data:   errString,
+
 	})
 }
 
