@@ -3,6 +3,7 @@ package api
 import (
 	"strconv"
 
+	"ecnu.space/tmp-loser/model"
 	"ecnu.space/tmp-loser/store"
 	"ecnu.space/tmp-loser/utils"
 	"github.com/gin-gonic/gin"
@@ -33,12 +34,28 @@ func SearchQuestion(c *gin.Context) {
 		return
 	}
 	if keyword == "" {
+		count, err := store.GetDB().QuestionRW.GetAllQuestionNum()
+		if err != nil {
+			utils.HandleGetDBErr(c, err.Error())
+			return
+		}
 		qs, err := store.GetDB().QuestionRW.GetAllQuestionByPage(uint32(page), uint32(pageSize))
 		if err != nil {
 			utils.HandleGetDBErr(c, err.Error())
 			return
 		}
-		utils.HandleGetSuccess(c, qs)
+		utils.HandleGetSuccess(c, struct {
+			Number int64 `json:"number"`
+			List   []*model.Question
+		}{
+			Number: count,
+			List:   qs,
+		})
+		return
+	}
+	count, err := store.GetDB().QuestionRW.FuzzySearchNum(keyword)
+	if err != nil {
+		utils.HandleGetDBErr(c, err.Error())
 		return
 	}
 	qs, err := store.GetDB().QuestionRW.FuzzySearchByPage(keyword, uint32(page), uint32(pageSize))
@@ -46,5 +63,11 @@ func SearchQuestion(c *gin.Context) {
 		utils.HandleGetDBErr(c, err.Error())
 		return
 	}
-	utils.HandleGetSuccess(c, qs)
+	utils.HandleGetSuccess(c, struct {
+		Number int64 `json:"number"`
+		List   []*model.Question 	`json:"list"`
+	}{
+		Number: count,
+		List:   qs,
+	})
 }

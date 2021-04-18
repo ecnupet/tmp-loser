@@ -13,6 +13,7 @@ require (
 	github.com/jinzhu/gorm v1.9.16
 	github.com/kr/pretty v0.2.1 // indirect
 	github.com/stretchr/testify v1.5.1
+	golang.org/x/text v0.3.2
 	google.golang.org/grpc v1.19.0
 	google.golang.org/protobuf v1.26.0
 )

@@ -50,6 +50,5 @@ func route(e *gin.Engine) {
 	adminAuthed.POST("/question/insert", api.InsertQuestion)
 	// 按关键字分页模糊查询题目问题描述 所有题目信息
 	adminAuthed.GET("/question", api.SearchQuestion)
-	adminAuthed.GET("/question/num", api.SearchQuestionNum)
 	adminAuthed.POST("/question/delete", api.DeleteQuestion)
 }
