@@ -45,7 +45,7 @@ func SearchQuestion(c *gin.Context) {
 			return
 		}
 		utils.HandleGetSuccess(c, struct {
-			Number int64 `json:"number"`
+			Number int64 `json:"count"`
 			List   []*model.Question
 		}{
 			Number: count,
@@ -64,8 +64,8 @@ func SearchQuestion(c *gin.Context) {
 		return
 	}
 	utils.HandleGetSuccess(c, struct {
-		Number int64 `json:"number"`
-		List   []*model.Question 	`json:"list"`
+		Number int64 `json:"count"`
+		List   []*model.Question 	`json:"records"`
 	}{
 		Number: count,
 		List:   qs,

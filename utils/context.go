@@ -36,21 +36,21 @@ type Response struct {
 
 func HandleGetDBErr(c *gin.Context, errString string) {
 	c.JSON(int(InternalError), Response{
-		State:  InternalError,
+		State:  1,
 		Detail: GetFailForDB,
 		Data:   errString,
 	})
 }
 func HandleGetErr(c *gin.Context, errString string) {
 	c.JSON(int(BadRequest), Response{
-		State:  BadRequest,
+		State:  4,
 		Detail: GetFail,
 		Data:   errString,
 	})
 }
 func HandleGetNumErr(c *gin.Context, errString string) {
 	c.JSON(int(InternalError), Response{
-		State:  InternalError,
+		State:  1,
 		Detail: GetFailForNum,
 		Data:   errString,
 	})
@@ -58,7 +58,7 @@ func HandleGetNumErr(c *gin.Context, errString string) {
 
 func HandleGetSuccess(c *gin.Context, data interface{}) {
 	c.JSON(int(OK), Response{
-		State:  OK,
+		State:  0,
 		Detail: GetSuccess,
 		Data:   data,
 	})
@@ -66,7 +66,7 @@ func HandleGetSuccess(c *gin.Context, data interface{}) {
 
 func HandlePostSuccess(c *gin.Context, data interface{}) {
 	c.JSON(int(OK), Response{
-		State:  OK,
+		State:  0,
 		Detail: PostSuccess,
 		Data:   data,
 	})
@@ -74,7 +74,7 @@ func HandlePostSuccess(c *gin.Context, data interface{}) {
 
 func HandlePostQuizQuestionErr(c *gin.Context, errString string) {
 	c.JSON(int(BadRequest), Response{
-		State:  BadRequest,
+		State:  4,
 		Detail: PostFail,
 		Data:   errString,
 	})
@@ -82,7 +82,7 @@ func HandlePostQuizQuestionErr(c *gin.Context, errString string) {
 
 func HandlePostDBErr(c *gin.Context, errString string) {
 	c.JSON(int(InternalError), Response{
-		State:  InternalError,
+		State:  1,
 		Detail: PostFailForDB,
 		Data:   errString,
 	})
@@ -94,7 +94,7 @@ func GrpcErr(c *gin.Context, errString string) {
 		Detail string `json:"detail"`
 		Data   string `json:"data"`
 	}{
-		State:  401,
+		State:  7,
 		Detail: "grpc请求失败",
 		Data:   errString,
 	})
@@ -106,7 +106,7 @@ func AuthErr(c *gin.Context, errString string) {
 		Detail string `json:"detail"`
 		Data   string `json:"data"`
 	}{
-		State:  401,
+		State:  7,
 		Detail: "鉴权失败, 请登录",
 		Data:   "",
 	})
@@ -118,7 +118,7 @@ func ExtractCookieErr(c *gin.Context, errString string) {
 		Detail string `json:"detail"`
 		Data   string `json:"data"`
 	}{
-		State:  401,
+		State:  7,
 		Detail: "提取Cookie失败",
 		Data:   errString,
 	})
@@ -130,8 +130,20 @@ func HandleNotAdminErr(c *gin.Context, errString string){
 		Detail string `json:"detail"`
 		Data   string `json:"data"`
 	}{
-		State:  401,
+		State:  7,
 		Detail: "请确定您是否是管理员",
+		Data:   errString,
+	})
+}
+
+func HandleNullReturn(c *gin.Context, errString string) {
+	c.JSON(404, struct {
+		State  int    `json:"state"`
+		Detail string `json:"detail"`
+		Data   string `json:"data"`
+	}{
+		State:  404,
+		Detail: "返回空",
 		Data:   errString,
 	})
 }
