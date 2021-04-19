@@ -16,6 +16,11 @@ func TestGetQuestionDetail(t *testing.T) {
 	defer c.Finish()
 	store.InitMockClient(c)
 	mockStore := store.GetMockDB()
+
+	mockStore.MockQuestionReadWriter.EXPECT().GetQuestionById(gomock.Any()).Return([]*model.Question{
+		
+	})
+
 	mockStore.MockQuestionReadWriter.EXPECT().GetQuestionById(gomock.Any()).Return([]*model.Question{
 		{
 			QuestionID: 5,
@@ -33,7 +38,9 @@ func TestGetQuestionDetail(t *testing.T) {
 			CreatedAt: time.Now(),
 		},
 	}, nil)
+	ttt := true
 	rst, err := mockStore.GetQuestionById(4)
 	assert.NoError(t, err)
+	assert.True(t, ttt)
 	fmt.Println(rst[0])
 }

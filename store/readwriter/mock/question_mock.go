@@ -104,3 +104,77 @@ func (mr *MockQuestionReadWriterMockRecorder) GetQuestionById(questionID interfa
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetQuestionById", reflect.TypeOf((*MockQuestionReadWriter)(nil).GetQuestionById), questionID)
 }
+
+// FuzzySearchByPage mocks base method
+func (m *MockQuestionReadWriter) FuzzySearchByPage(keyword string, page, pageSize uint32) ([]*model.Question, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "FuzzySearchByPage", keyword, page, pageSize)
+	ret0, _ := ret[0].([]*model.Question)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// FuzzySearchByPage indicates an expected call of FuzzySearchByPage
+func (mr *MockQuestionReadWriterMockRecorder) FuzzySearchByPage(keyword, page, pageSize interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "FuzzySearchByPage", reflect.TypeOf((*MockQuestionReadWriter)(nil).FuzzySearchByPage), keyword, page, pageSize)
+}
+
+// FuzzySearchNum mocks base method
+func (m *MockQuestionReadWriter) FuzzySearchNum(keyword string) (int64, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "FuzzySearchNum", keyword)
+	ret0, _ := ret[0].(int64)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// FuzzySearchNum indicates an expected call of FuzzySearchNum
+func (mr *MockQuestionReadWriterMockRecorder) FuzzySearchNum(keyword interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "FuzzySearchNum", reflect.TypeOf((*MockQuestionReadWriter)(nil).FuzzySearchNum), keyword)
+}
+
+// GetAllQuestionNum mocks base method
+func (m *MockQuestionReadWriter) GetAllQuestionNum() (int64, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetAllQuestionNum")
+	ret0, _ := ret[0].(int64)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetAllQuestionNum indicates an expected call of GetAllQuestionNum
+func (mr *MockQuestionReadWriterMockRecorder) GetAllQuestionNum() *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetAllQuestionNum", reflect.TypeOf((*MockQuestionReadWriter)(nil).GetAllQuestionNum))
+}
+
+// GetAllQuestionByPage mocks base method
+func (m *MockQuestionReadWriter) GetAllQuestionByPage(page, pageSize uint32) ([]*model.Question, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetAllQuestionByPage", page, pageSize)
+	ret0, _ := ret[0].([]*model.Question)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetAllQuestionByPage indicates an expected call of GetAllQuestionByPage
+func (mr *MockQuestionReadWriterMockRecorder) GetAllQuestionByPage(page, pageSize interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetAllQuestionByPage", reflect.TypeOf((*MockQuestionReadWriter)(nil).GetAllQuestionByPage), page, pageSize)
+}
+
+// DeleteQuestion mocks base method
+func (m *MockQuestionReadWriter) DeleteQuestion(questionId uint32) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "DeleteQuestion", questionId)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// DeleteQuestion indicates an expected call of DeleteQuestion
+func (mr *MockQuestionReadWriterMockRecorder) DeleteQuestion(questionId interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteQuestion", reflect.TypeOf((*MockQuestionReadWriter)(nil).DeleteQuestion), questionId)
+}

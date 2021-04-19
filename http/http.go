@@ -7,7 +7,6 @@ import (
 	"ecnu.space/tmp-loser/conf"
 	"ecnu.space/tmp-loser/http/handler/api"
 	"github.com/gin-gonic/gin"
-	"ecnu.space/tmp-loser/http/handler/middleware"
 )
 
 // InitAndStart init http and start service
@@ -27,7 +26,7 @@ func InitAndStart(c *conf.AppConfig) *http.Server {
 
 //route provide http routes to invoke handler
 func route(e *gin.Engine) {
-	e.Use(middleware.Auth())
+	// e.Use(middleware.Auth())
 	authed := e.Group("/api/tl")
 	// POST route
 	authed.POST("test", api.TestPost)
@@ -43,7 +42,7 @@ func route(e *gin.Engine) {
 
 	// 以下需要有管理员权限：
 	adminAuthed := e.Group("/api/tl/admin")
-	adminAuthed.Use(middleware.AdminAuth())
+	// adminAuthed.Use(middleware.AdminAuth())
 	// 问题更新接口
 	adminAuthed.POST("/question/update", api.UpdateQuestionDetail)
 	// 问题插入接口
