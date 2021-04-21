@@ -71,7 +71,6 @@ func GetQuizHistoryDetail(c *gin.Context) {
 		}
 		qrs = append(qrs, qr)
 	}
-	qrs = reverse(qrs)
 	r := model.QuizHistoryDetailResult{
 		StartTime: startTime,
 		CostTime:  costTime,
