@@ -23,7 +23,7 @@ func Auth() gin.HandlerFunc {
 		}
 		client := &http.Client{}
 		//生成要访问的url
-		url := "https://backend.ecnu.space/api/pm/auth/check"
+		url := "http://pm-app-svc.backend:5000/api/pm/auth/check"
 		//提交请求
 		req, err := http.NewRequest("GET", url, nil)
 		//增加header选项
