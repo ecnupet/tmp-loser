@@ -51,13 +51,13 @@ func GetQuizHistory(c *gin.Context) {
 			utils.HandleGetDBErr(c, "GetQuizHistory no commit history in quiz")
 			return
 		}
-		startTime := chs[0].CreatedAt.Add(time.Hour*8).Format(timeFormat)
+		startTime := chs[0].CreatedAt.Add(time.Hour * 8).Format(timeFormat)
 		point := uint32(0)
 		wg := sync.WaitGroup{}
 		for _, ch := range chs {
 			wg.Add(1)
-			go func(ch *model.CommitHistory){
-				defer func(){
+			go func(ch *model.CommitHistory) {
+				defer func() {
 					wg.Done()
 				}()
 				log.Println(ch)
@@ -86,7 +86,7 @@ func GetQuizHistory(c *gin.Context) {
 			CostTime:  costTime,
 		})
 	}
-	utils.HandleGetSuccess(c, quizInfos)
+	utils.HandleGetSuccess(c,reverse(quizInfos))
 }
 
 func notIn(arr []uint32, n uint32) bool {
@@ -96,4 +96,12 @@ func notIn(arr []uint32, n uint32) bool {
 		}
 	}
 	return true
+}
+
+func reverse(qrs []model.QuizHistoryResult) []model.QuizHistoryResult {
+	N := len(qrs)
+	for i := 0; i < len(qrs)/2; i++ {
+		qrs[i], qrs[N-i-1] = qrs[N-i-1], qrs[i]
+	}
+	return qrs
 }

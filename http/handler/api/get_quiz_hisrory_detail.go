@@ -79,11 +79,3 @@ func GetQuizHistoryDetail(c *gin.Context) {
 	}
 	utils.HandleGetSuccess(c, r)
 }
-
-func reverse(qrs []model.QuizHistoryDetailResultQuestion)[]model.QuizHistoryDetailResultQuestion{
-	N := len(qrs)
-	for i := 0; i < len(qrs)/2; i++ {
-		qrs[i], qrs[N-i-1] = qrs[N-i-1], qrs[i]
-	}
-	return qrs
-}
