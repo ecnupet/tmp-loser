@@ -39,7 +39,10 @@ func CommitQuizQuestion(c *gin.Context) {
 		utils.HandlePostDBErr(c, err.Error())
 		return
 	}
-
+	questions, _ := store.GetDB().QuestionRW.GetQuestionById(cqp.QuestinoID)
+	if cqp.TimeSpend > questions[0].Duration {
+		cqp.TimeSpend = 0
+	}
 	ch := model.CommitHistory{
 		QuestionID: cqp.QuestinoID,
 		// 临时设置，之后用person-manage grpc服务处理用户的token, 拿到用户名
