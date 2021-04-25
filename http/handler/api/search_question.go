@@ -7,6 +7,7 @@ import (
 	"ecnu.space/tmp-loser/store"
 	"ecnu.space/tmp-loser/utils"
 	"github.com/gin-gonic/gin"
+	"github.com/sirupsen/logrus"
 )
 
 func SearchQuestion(c *gin.Context) {
@@ -63,6 +64,7 @@ func SearchQuestion(c *gin.Context) {
 		utils.HandleGetDBErr(c, err.Error())
 		return
 	}
+	logrus.Info("search questions: ",qs)
 	utils.HandleGetSuccess(c, struct {
 		Number int64 `json:"count"`
 		List   []*model.Question 	`json:"records"`

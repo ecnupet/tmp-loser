@@ -8,7 +8,7 @@ import (
 func AdminAuth() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		isAdmin := c.GetString("isAdmin")
-		if isAdmin != "1" {
+		if isAdmin != "1" || isAdmin != "2" {
 			utils.HandleNotAdminErr(c, "非管理员")
 			c.Abort()
 		}

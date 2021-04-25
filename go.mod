@@ -11,6 +11,7 @@ require (
 	github.com/gomodule/redigo v1.8.4
 	github.com/jinzhu/gorm v1.9.16
 	github.com/kr/pretty v0.2.1 // indirect
+	github.com/sirupsen/logrus v1.2.0
 	github.com/stretchr/testify v1.5.1
 	google.golang.org/protobuf v1.26.0 // indirect
 )

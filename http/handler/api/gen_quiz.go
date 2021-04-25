@@ -20,8 +20,8 @@ const (
 
 var (
 	// map 互斥锁
-	mutex sync.Mutex
-	wg    sync.WaitGroup
+	mutex           sync.Mutex
+	wg              sync.WaitGroup
 )
 
 // 鉴权配置前，先假设提供user_name参数
@@ -33,7 +33,7 @@ func GenQuiz(c *gin.Context) {
 	}
 	userName := userNameAny.(string)
 	questionIDSlice := []uint32{}
-	log.Println("执行次数：", 11)
+	log.Println("执行次数：",11)
 	tt := model.NewQuizParams{}
 	err := c.ShouldBind(&tt)
 	if err != nil {
@@ -54,7 +54,7 @@ func GenQuiz(c *gin.Context) {
 				utils.HandleGetDBErr(c, err.Error())
 				return
 			}
-			seed := rand.Int()%100
+			seed := rand.Int()
 			for i := 0; i < questionNumPerType && i < len(questions); i++ {
 				mutex.Lock()
 				questionIDSlice = append(questionIDSlice, questions[(i+seed)%len(questions)].QuestionID)
