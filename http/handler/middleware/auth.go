@@ -61,7 +61,7 @@ func Auth() gin.HandlerFunc {
 		}
 
 		c.Set("user_name", auth.Data.Name)
-		c.Set("isAdmin", auth.Data.IsAdmin)
+		c.Set("authorization", auth.Data.Authorization)
 		// client := personManage.GetPMClient()
 
 		// md := metadata.Pairs("Cookie", ".AspNetCore.Cookies="+token)

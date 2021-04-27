@@ -7,7 +7,7 @@ type Auth struct {
 }
 
 type Data struct {
-	IsAdmin string `json:"isAdmin"`
+	Authorization string `json:"authorization"`
 	Id      string `json:"id"`
 	Name    string `json:"name"`
 	Message bool `json:"message"`

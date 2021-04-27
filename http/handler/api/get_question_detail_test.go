@@ -23,7 +23,7 @@ func TestGetQuestionDetail(t *testing.T) {
 
 	mockStore.MockQuestionReadWriter.EXPECT().GetQuestionById(gomock.Any()).Return([]*model.Question{
 		{
-			QuestionID: 5,
+			QuestionID: 4,
 			Description: "慢性肝炎的原因不包括",
 			Type: 0,
 			Options: map[string]string{

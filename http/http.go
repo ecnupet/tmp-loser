@@ -30,8 +30,8 @@ func route(e *gin.Engine) {
 	e.Use(middleware.Auth())
 	authed := e.Group("/api/tl")
 	// POST route
-	authed.POST("test", api.TestPost)
-	authed.POST("test2", api.TestPost2Seconds)
+	// authed.POST("test", api.TestPost)
+	// authed.POST("test2", api.TestPost2Seconds)
 	authed.POST("/quiz/new", api.GenQuiz)
 	authed.POST("/quiz/correct", api.CommitQuizQuestion)
 	// GET route
