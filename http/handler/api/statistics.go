@@ -7,6 +7,7 @@ import (
 	"ecnu.space/tmp-loser/store"
 	"ecnu.space/tmp-loser/utils"
 	"github.com/gin-gonic/gin"
+	"github.com/sirupsen/logrus"
 )
 
 func GetStatistics(c *gin.Context) {
@@ -17,6 +18,7 @@ func GetStatistics(c *gin.Context) {
 	}
 	userName := userNameAny.(string)
 	chs, err := store.GetDB().CommitHistoryRW.GetUserAllCommitHistory(userName)
+	logrus.Info("get statistics relative info: ", chs)
 	if err != nil {
 		utils.HandleGetDBErr(c, err.Error())
 	}
@@ -42,10 +44,10 @@ func GetStatistics(c *gin.Context) {
 	}
 
 	utils.HandleGetSuccess(c, struct {
-		TotalCommitCount   uint32 `json:"totalCommitCount"`
-		TotalCorrectCount  uint32 `json:"totalCorrectCount"`
-		TotalWrongCount    uint32 `json:"totalWrongCount"`
-		TotalNoAnswerCount uint32 `json:"totalNoAnswerCount"`
+		TotalCommitCount   uint32  `json:"totalCommitCount"`
+		TotalCorrectCount  uint32  `json:"totalCorrectCount"`
+		TotalWrongCount    uint32  `json:"totalWrongCount"`
+		TotalNoAnswerCount uint32  `json:"totalNoAnswerCount"`
 		AverageAnswerTime  float64 `json:"averageAnswerTime"`
 	}{
 		TotalCommitCount:   uint32(times),
